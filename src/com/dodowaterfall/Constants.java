@@ -4,7 +4,7 @@ public class Constants {
 
 	public final static int COLUMN_COUNT = 2; // 显示列数
 	
-	public final static int PICTURE_COUNT_PER_LOAD = 30; // 每次加载30张图片
+	public final static int PICTURE_COUNT_PER_LOAD = 20; // 每次加载30张图片
 	
 	public final static int PICTURE_TOTAL_COUNT = 1000;   //允许加载的最多图片数
 	
