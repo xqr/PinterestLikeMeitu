@@ -208,6 +208,7 @@ public class ImageResizer extends ImageWorker {
 				inSampleSize++;
 			}
 		}
+		
 		return inSampleSize;
 	}
 }

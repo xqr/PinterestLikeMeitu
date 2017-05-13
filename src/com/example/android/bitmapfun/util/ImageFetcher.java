@@ -79,7 +79,6 @@ public class ImageFetcher extends ImageResizer {
         final NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnectedOrConnecting()) {
             Toast.makeText(context, "No network connection found.", Toast.LENGTH_LONG).show();
-            Log.e(TAG, "checkConnection - no connection found");
         }
     }
 
@@ -91,18 +90,18 @@ public class ImageFetcher extends ImageResizer {
      * @return The downloaded and resized bitmap
      */
     private Bitmap processBitmap(String data, String referer) {
-//        if (BuildConfig.DEBUG) {
-////            Log.d(TAG, "processBitmap - " + data);
-//        }
         
         // Download a bitmap, write it to a file
         final File f = downloadBitmap(mContext, data, referer);
 
         if (f != null) {
             // Return a sampled down version
-            return decodeSampledBitmapFromFile(f.toString(), mImageWidth, mImageHeight);
+            Bitmap result = decodeSampledBitmapFromFile(f.toString(), mImageWidth, mImageHeight);
+            // 删除临时文件
+            f.delete();
+            return result;
         }
-
+        
         return null;
     }
 
@@ -128,15 +127,8 @@ public class ImageFetcher extends ImageResizer {
         final File cacheFile = new File(cache.createFilePath(urlString));
 
         if (cache.containsKey(urlString)) {
-//            if (BuildConfig.DEBUG) {
-////                Log.d(TAG, "downloadBitmap - found in http cache - " + urlString);
-//            }
             return cacheFile;
         }
-
-//        if (BuildConfig.DEBUG) {
-////            Log.d(TAG, "downloadBitmap - downloading - " + urlString);
-//        }
 
         Utils.disableConnectionReuseIfNecessary();
         HttpURLConnection urlConnection = null;

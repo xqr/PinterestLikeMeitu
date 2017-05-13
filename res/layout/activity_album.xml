@@ -5,31 +5,35 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <RelativeLayout 
-        android:layout_width="fill_parent"  
-        android:layout_height="40dp"
-        android:background="@color/blue">
-        
-        <TextView
+    <!-- 内容页banner样式 -->
+    <include layout="@layout/activity_content_banner"/>
+    
+    <!-- 横线 -->
+    <View
+            android:id="@+id/div_tab_bar"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bannerline"/>
+    
+    <TextView
+            android:id="@+id/zhuanjizhongcao"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_centerVertical="true" 
-            android:text="专辑详情"
-            android:gravity="center"/>
-        
-        <ImageView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/fanhuishangyiye"
-            android:onClick="backPrePageClick"/>  
-            
-    </RelativeLayout>
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="6dp"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:text="我想给你种个草"
+            android:gravity="center"/>
+    
+    <TextView
+            android:id="@+id/piccount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="#999999"
+            android:gravity="center"/>
     
     <com.huewu.pla.lib.MultiColumnListView
         android:id="@+id/albumlist"
@@ -37,6 +41,7 @@
          android:fastScrollEnabled="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent" 
-        android:listSelector="@android:color/transparent"  />
+        android:listSelector="@android:color/transparent"
+        android:background="@color/listbackground" />
     
 </LinearLayout>

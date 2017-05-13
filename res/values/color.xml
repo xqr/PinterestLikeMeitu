@@ -10,5 +10,8 @@
     <color name="orange">#fa8919</color>
     <color name="black">#000000</color>
     
-    <color name="splashbackground">#fb552b</color>
+    <color name="bannerline">#e2e2e2</color>
+    <color name="listbackground">#ececec</color>
+    
+    
 </resources>

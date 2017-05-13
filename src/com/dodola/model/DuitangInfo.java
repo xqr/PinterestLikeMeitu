@@ -20,6 +20,7 @@ public class DuitangInfo implements Serializable {
     private List<String> images;
     private String source;
     private String status = "";
+    private int rand = -1;
     
     /**
      * 随机选择一张图片作为封面
@@ -30,7 +31,9 @@ public class DuitangInfo implements Serializable {
         if (images == null || images.isEmpty()) {
             return "";
         }
-        int rand = new Random().nextInt(images.size());
+        if (rand == -1) {
+            rand = new Random().nextInt(images.size());
+        }
         return images.get(rand);
     }
     

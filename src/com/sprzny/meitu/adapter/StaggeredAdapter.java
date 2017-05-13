@@ -58,7 +58,6 @@ public class StaggeredAdapter extends BaseAdapter {
         holder.imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("duitangInfo", duitangInfo);
@@ -90,9 +89,14 @@ public class StaggeredAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int arg0) {
-        return 0;
+        return arg0;
     }
 
+    public void resetDatas(List<DuitangInfo> datas) {
+        mInfos = new LinkedList<DuitangInfo>();
+        mInfos.addAll(datas);
+    }
+    
     public void addItemLast(List<DuitangInfo> datas) {
         mInfos.addAll(datas);
     }

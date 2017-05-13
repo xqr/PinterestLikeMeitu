@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/news_item_bg"
+    android:layout_marginTop="20dp"
     android:orientation="vertical" >
 
     <com.dodowaterfall.widget.ScaleImageView
@@ -16,15 +17,8 @@
         android:id="@+id/news_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:singleLine="false"
-        android:textColor="#656565" />
-
-    <TextView
-        android:id="@+id/news_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:gravity="right"
-        android:textColor="#9f9f9f" />
+        android:textColor="#333333" />
 
 </LinearLayout>

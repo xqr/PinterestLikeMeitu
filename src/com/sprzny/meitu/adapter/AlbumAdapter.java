@@ -7,11 +7,16 @@ import com.dodowaterfall.widget.ScaleImageView;
 import com.example.android.bitmapfun.util.ImageFetcher;
 import com.huewu.pla.lib.MultiColumnListView;
 import com.huewu.pla.sample.R;
+import com.sprzny.meitu.AlbumActivity;
+import com.sprzny.meitu.ShowPhotoActivity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -30,8 +35,8 @@ public class AlbumAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        
         ViewHolder holder;
 
         if (convertView == null) {
@@ -51,6 +56,22 @@ public class AlbumAdapter extends BaseAdapter {
         
         String imageUrl = mDuitangInfo.getImages().get(position);
         mImageFetcher.loadImage(imageUrl, mDuitangInfo.getSource(), holder.imageView);
+        
+        holder.imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("duitangInfo", mDuitangInfo);
+                bundle.putInt("position", position);
+                intent.putExtras(bundle);
+                
+                intent.setClass(mContext, ShowPhotoActivity.class);  
+                mContext.startActivity(intent);
+            }
+        });
+        
         return convertView;
     }
 

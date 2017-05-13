@@ -265,7 +265,11 @@ public abstract class ImageWorker {
 			// then call the main
 			// process method (as implemented by a subclass)
 			if (bitmap == null && !isCancelled() && getAttachedImageView() != null && !mExitTasksEarly) {
-				bitmap = processBitmap(params[0], String.valueOf(params[1]));
+			    if (params.length == 2) {
+			        bitmap = processBitmap(params[0], String.valueOf(params[1]));
+			    } else {
+			        bitmap = processBitmap(params[0], null);
+			    }
 			}
 
 			// If the bitmap was processed and the image cache is available,
@@ -359,8 +363,9 @@ public abstract class ImageWorker {
 			// Set background to loading bitmap
 			imageView.setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), mLoadingBitmap));
 			imageView.setImageDrawable(td);
-			td.startTransition(FADE_IN_TIME);
+			td.startTransition(FADE_IN_TIME); 
 		} else {
+		    // TODO 这里没有执行
 			imageView.setImageBitmap(bitmap);
 		}
 	}

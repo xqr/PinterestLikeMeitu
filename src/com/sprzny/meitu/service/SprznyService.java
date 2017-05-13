@@ -19,8 +19,13 @@ public class SprznyService {
      * 
      * @return
      */
-    public static List<DuitangInfo> mmonly(int page) {
-        String url = "http://www.sprzny.com/mmonly/l/" + page;
+    public static List<DuitangInfo> mmonly(int page, int categoryid) {
+        String url = "http://www.sprzny.com/mmonly/l/" ;
+        if (categoryid != 0) {
+            url = url + categoryid + "/" + page;
+        } else {
+            url = url + page;
+        }
         
         String json = "";
         try {
