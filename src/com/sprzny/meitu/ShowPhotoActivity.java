@@ -6,6 +6,7 @@ import com.example.android.bitmapfun.util.ImageFetcher;
 import com.example.android.bitmapfun.util.ImageCache.ImageCacheParams;
 import com.sprzny.meitu.R;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ public class ShowPhotoActivity extends FragmentActivity implements OnPageChangeL
     protected void onCreate(Bundle savedInstanceState) {  
         super.onCreate(savedInstanceState);  
         setContentView(R.layout.activity_photo); 
+        
+        PushAgent.getInstance(this).onAppStart();
         
         initBar();
     }

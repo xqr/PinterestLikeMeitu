@@ -8,6 +8,7 @@ import com.huewu.pla.lib.MultiColumnListView;
 import com.sprzny.meitu.R;
 import com.sprzny.meitu.adapter.AlbumAdapter;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class AlbumActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
+        
+        PushAgent.getInstance(this).onAppStart();
         
         // 初始化界面元素
         initBar();

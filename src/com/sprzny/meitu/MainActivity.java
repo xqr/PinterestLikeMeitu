@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.dodola.model.CategoryInfo;
@@ -31,6 +33,8 @@ import com.sprzny.meitu.adapter.CategoryAdapter;
 import com.sprzny.meitu.adapter.StaggeredAdapter;
 import com.sprzny.meitu.service.SprznyService;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 public class MainActivity extends FragmentActivity implements IXListViewListener {
     
@@ -128,10 +132,34 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         
         /** 设置是否对日志信息进行加密, 默认false(不加密). */
         MobclickAgent.enableEncrypt(true);//6.0.0版本及以后
+        PushAgentRegister();
+        PushAgent.getInstance(this).onAppStart();
         
         // 初始化界面元素
         initBar();
     }
+    
+    /**
+     * 启推送服务
+     */
+    private void PushAgentRegister() {
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        //注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+
+          @Override
+          public void onSuccess(String deviceToken) {
+              //注册成功会返回device token
+          }
+
+          @Override
+          public void onFailure(String s, String s1) {
+
+          }
+      });
+        mPushAgent.setDebugMode(false);
+    }
+    
     
     /**
      * 初始化按钮和界面元素
@@ -184,6 +212,8 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                 long id) {
+            isMain = false;
+            
             CategoryInfo categoryInfo = createCategorys().get(position);
             categoryid = categoryInfo.getCategoryId();
             currentPage = 0;
@@ -199,11 +229,17 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
     }
     
     /**
+     * 是否为主界面，方便控制物理返回键功能
+     */
+    private boolean isMain = true;
+    
+    /**
      * 返回到列表页面
      * 
      * @param v
      */
     public void backPrePageClick(View v) {
+        isMain = true;
         exchangeView(false);
         mainBannerLayout.setVisibility(View.VISIBLE);
         contentBannerLayout.setVisibility(View.GONE);
@@ -317,5 +353,29 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
     @Override
     public void onLoadMore() {
         AddItemToContainer(++currentPage, 2);
+    }
+    
+    private long mExitTime;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 不是主界面，点击物理键返回直接回到主界面
+            if (!isMain) {
+                backPrePageClick(null);
+                return true;
+            }
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                Toast.makeText(this, "在按一次退出", Toast.LENGTH_SHORT).show();
+                mExitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+            return true;
+        }
+        //拦截MENU按钮点击事件，让他无任何操作
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }// end of class
