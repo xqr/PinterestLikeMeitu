@@ -156,6 +156,9 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         if (mAdapter == null) {
             mAdapter = new StaggeredAdapter(this, mAdapterView, mImageFetcher);
         }
+        mAdapterView.setAdapter(mAdapter);
+        // 加载1页
+        AddItemToContainer(currentPage, 2);
         
         // 发现列表
         gview = (GridView) findViewById(R.id.gview);
@@ -289,8 +292,6 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         super.onResume();
         
         mImageFetcher.setExitTasksEarly(false);
-        mAdapterView.setAdapter(mAdapter);
-        AddItemToContainer(currentPage, 2);
     }
 
     @Override

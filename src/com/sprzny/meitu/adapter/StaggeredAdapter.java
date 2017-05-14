@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import me.maxwin.view.XListView;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

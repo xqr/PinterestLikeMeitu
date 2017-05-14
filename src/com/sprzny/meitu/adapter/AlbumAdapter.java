@@ -1,13 +1,10 @@
 package com.sprzny.meitu.adapter;
 
-import me.maxwin.view.XListView;
-
 import com.dodola.model.DuitangInfo;
 import com.dodowaterfall.widget.ScaleImageView;
 import com.example.android.bitmapfun.util.ImageFetcher;
 import com.huewu.pla.lib.MultiColumnListView;
 import com.huewu.pla.sample.R;
-import com.sprzny.meitu.AlbumActivity;
 import com.sprzny.meitu.ShowPhotoActivity;
 
 import android.content.Context;
@@ -60,14 +57,13 @@ public class AlbumAdapter extends BaseAdapter {
         holder.imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("duitangInfo", mDuitangInfo);
                 bundle.putInt("position", position);
                 intent.putExtras(bundle);
                 
-                intent.setClass(mContext, ShowPhotoActivity.class);  
+                intent.setClass(mContext, ShowPhotoActivity.class);
                 mContext.startActivity(intent);
             }
         });

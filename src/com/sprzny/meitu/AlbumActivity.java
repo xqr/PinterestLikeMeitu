@@ -56,6 +56,8 @@ public class AlbumActivity extends FragmentActivity {
             }
             mAdapter = new AlbumAdapter(this, duitangInfo, mAdapterView, mImageFetcher);
         }
+        
+        mAdapterView.setAdapter(mAdapter);
         // 即时刷新
         mAdapter.notifyDataSetChanged();
     }
@@ -66,7 +68,7 @@ public class AlbumActivity extends FragmentActivity {
      * @param v
      */
     public void backPrePageClick(View v) {
-        super.onBackPressed();
+        onBackPressed();
 //        AlbumActivity.this.finish();
     }
     
@@ -74,11 +76,16 @@ public class AlbumActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         mImageFetcher.setExitTasksEarly(false);
-        mAdapterView.setAdapter(mAdapter);
+//        mAdapterView.setAdapter(mAdapter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

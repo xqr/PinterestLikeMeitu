@@ -14,4 +14,8 @@
     <color name="listbackground">#ececec</color>
     
     
+    <color name="bg_row_border_night">#ff444444</color>
+    <color name="bg_login_page">#fff9f9f9</color>
+    <color name="bg_full_image">#ff000000</color>
+    
 </resources>
