@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.dodola.model.DuitangInfo;
 import com.dodowaterfall.widget.ScaleImageView;
 import com.example.android.bitmapfun.util.ImageFetcher;
-import com.huewu.pla.sample.R;
+import com.sprzny.meitu.R;
 import com.sprzny.meitu.AlbumActivity;
 
 public class StaggeredAdapter extends BaseAdapter {

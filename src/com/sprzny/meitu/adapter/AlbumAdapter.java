@@ -6,7 +6,7 @@ import com.dodola.model.DuitangInfo;
 import com.dodowaterfall.widget.ScaleImageView;
 import com.example.android.bitmapfun.util.ImageFetcher;
 import com.huewu.pla.lib.MultiColumnListView;
-import com.huewu.pla.sample.R;
+import com.sprzny.meitu.R;
 import com.sprzny.meitu.AlbumActivity;
 import com.sprzny.meitu.ShowPhotoActivity;
 

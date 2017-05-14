@@ -19,7 +19,7 @@ package com.huewu.pla.lib.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.huewu.pla.sample.R;
+import com.sprzny.meitu.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;

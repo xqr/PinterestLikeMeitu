@@ -3,7 +3,7 @@ package com.sprzny.meitu.adapter;
 import java.util.ArrayList;
 import java.util.List;
 import com.dodola.model.CategoryInfo;
-import com.huewu.pla.sample.R;
+import com.sprzny.meitu.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -16,7 +16,7 @@
 
 package com.example.android.bitmapfun.util;
 
-import com.huewu.pla.sample.BuildConfig;
+import com.sprzny.meitu.BuildConfig;
 
 import android.content.Context;
 import android.content.res.Resources;

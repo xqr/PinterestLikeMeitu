@@ -37,7 +37,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.huewu.pla.sample.BuildConfig;
+import com.sprzny.meitu.BuildConfig;
 
 /**
  * A simple disk LRU bitmap cache to illustrate how a disk cache would be used

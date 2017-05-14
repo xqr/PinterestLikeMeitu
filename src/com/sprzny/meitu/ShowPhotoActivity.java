@@ -1,29 +1,26 @@
 package com.sprzny.meitu;
 
 import com.dodola.model.DuitangInfo;
-import com.dodowaterfall.widget.ScaleImageView;
+import com.example.android.bitmapfun.util.ImageCache;
 import com.example.android.bitmapfun.util.ImageFetcher;
-import com.huewu.pla.sample.R;
-import com.sprzny.meitu.view.ZoomImageView;
-import android.app.Activity;
+import com.example.android.bitmapfun.util.ImageCache.ImageCacheParams;
+import com.sprzny.meitu.R;
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ViewFlipper;
 
-public class ShowPhotoActivity extends Activity implements OnPageChangeListener {
+public class ShowPhotoActivity extends FragmentActivity implements OnPageChangeListener {
     
-//    private ZoomImageView mImageView;
     private ImageFetcher mImageFetcher;
     
     /** 
@@ -47,22 +44,15 @@ public class ShowPhotoActivity extends Activity implements OnPageChangeListener 
     /**
      * 初始化界面
      */
-    private void initBar() {
-//        mImageView = (ZoomImageView) findViewById(R.id.show_photo);
-        
+    private void initBar() {        
         Intent intent = getIntent();
         DuitangInfo duitangInfo = (DuitangInfo) intent.getSerializableExtra("duitangInfo");
         int position = intent.getIntExtra("position", 0);
-//        String imagePath = duitangInfo.getImages().get(position);
-        
-//        WindowManager wm = this.getWindowManager();
-//        int width = wm.getDefaultDisplay().getWidth();
-//        int height = wm.getDefaultDisplay().getHeight();
         
         mImageFetcher = new ImageFetcher(this, 480);
-//        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
-//        mImageFetcher.setImageFadeIn(false);
-//        mImageFetcher.loadImage(imagePath, duitangInfo.getSource(), mImageView);
+        ImageCacheParams imageCacheParams = new ImageCacheParams("plameitu");
+        imageCacheParams.clearDiskCacheOnStart = true;
+        mImageFetcher.setImageCache(ImageCache.findOrCreateCache(this, imageCacheParams));
         
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -143,5 +133,12 @@ public class ShowPhotoActivity extends Activity implements OnPageChangeListener 
     protected void onResume() {
         super.onResume();
         mImageFetcher.setExitTasksEarly(false);
+        MobclickAgent.onPause(this);
+    }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

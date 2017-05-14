@@ -6,7 +6,7 @@
  */
 package me.maxwin.view;
 
-import com.huewu.pla.sample.R;
+import com.sprzny.meitu.R;
 
 import android.content.Context;
 import android.util.AttributeSet;

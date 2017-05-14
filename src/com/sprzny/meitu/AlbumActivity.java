@@ -5,8 +5,9 @@ import com.example.android.bitmapfun.util.ImageCache;
 import com.example.android.bitmapfun.util.ImageFetcher;
 import com.example.android.bitmapfun.util.ImageCache.ImageCacheParams;
 import com.huewu.pla.lib.MultiColumnListView;
-import com.huewu.pla.sample.R;
+import com.sprzny.meitu.R;
 import com.sprzny.meitu.adapter.AlbumAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,7 +46,8 @@ public class AlbumActivity extends FragmentActivity {
         mImageFetcher.setLoadingImage(R.drawable.empty_photo);
         ImageCacheParams imageCacheParams = new ImageCacheParams("plameitu");
         imageCacheParams.clearDiskCacheOnStart = true;
-        mImageFetcher.setImageCache(new ImageCache(this, imageCacheParams));
+        mImageFetcher.setImageCache(ImageCache.findOrCreateCache(this, imageCacheParams));
+        
         if (mAdapter == null) {
             
             Intent intent = getIntent();
@@ -56,6 +58,8 @@ public class AlbumActivity extends FragmentActivity {
             }
             mAdapter = new AlbumAdapter(this, duitangInfo, mAdapterView, mImageFetcher);
         }
+        
+        mAdapterView.setAdapter(mAdapter);
         // 即时刷新
         mAdapter.notifyDataSetChanged();
     }
@@ -67,16 +71,21 @@ public class AlbumActivity extends FragmentActivity {
      */
     public void backPrePageClick(View v) {
         super.onBackPressed();
-//        AlbumActivity.this.finish();
     }
     
     @Override
     protected void onResume() {
         super.onResume();
         mImageFetcher.setExitTasksEarly(false);
-        mAdapterView.setAdapter(mAdapter);
+        MobclickAgent.onPause(this);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+    
     @Override
     protected void onDestroy() {
         super.onDestroy();

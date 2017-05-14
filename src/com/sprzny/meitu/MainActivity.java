@@ -26,10 +26,11 @@ import com.dodowaterfall.Helper;
 import com.example.android.bitmapfun.util.ImageCache;
 import com.example.android.bitmapfun.util.ImageCache.ImageCacheParams;
 import com.example.android.bitmapfun.util.ImageFetcher;
-import com.huewu.pla.sample.R;
+import com.sprzny.meitu.R;
 import com.sprzny.meitu.adapter.CategoryAdapter;
 import com.sprzny.meitu.adapter.StaggeredAdapter;
 import com.sprzny.meitu.service.SprznyService;
+import com.umeng.analytics.MobclickAgent;
 
 public class MainActivity extends FragmentActivity implements IXListViewListener {
     
@@ -107,7 +108,6 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
      *            1为下拉刷新 2为加载更多
      */
     private void AddItemToContainer(int pageindex, int type) {
-        // TODO 
         if (task.getStatus() != Status.RUNNING) {
             ContentTask task = new ContentTask(this, type);
             // 加载
@@ -125,6 +125,9 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        /** 设置是否对日志信息进行加密, 默认false(不加密). */
+        MobclickAgent.enableEncrypt(true);//6.0.0版本及以后
         
         // 初始化界面元素
         initBar();
@@ -152,10 +155,14 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         mImageFetcher.setLoadingImage(R.drawable.empty_photo);
         ImageCacheParams imageCacheParams = new ImageCacheParams("plameitu");
         imageCacheParams.clearDiskCacheOnStart = true;
-        mImageFetcher.setImageCache(new ImageCache(this, imageCacheParams));
+        mImageFetcher.setImageCache(ImageCache.findOrCreateCache(this, imageCacheParams));
+        
         if (mAdapter == null) {
             mAdapter = new StaggeredAdapter(this, mAdapterView, mImageFetcher);
         }
+        mAdapterView.setAdapter(mAdapter);
+        // 初始化加载一页
+        AddItemToContainer(currentPage, 2);
         
         // 发现列表
         gview = (GridView) findViewById(R.id.gview);
@@ -287,12 +294,16 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
     @Override
     protected void onResume() {
         super.onResume();
-        
         mImageFetcher.setExitTasksEarly(false);
-        mAdapterView.setAdapter(mAdapter);
-        AddItemToContainer(currentPage, 2);
+        MobclickAgent.onResume(this);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+    
     @Override
     protected void onDestroy() {
         super.onDestroy();

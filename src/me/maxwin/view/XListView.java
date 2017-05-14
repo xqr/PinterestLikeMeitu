@@ -11,7 +11,7 @@ package me.maxwin.view;
 import com.huewu.pla.lib.MultiColumnListView;
 import com.huewu.pla.lib.internal.PLA_AbsListView;
 import com.huewu.pla.lib.internal.PLA_AbsListView.OnScrollListener;
-import com.huewu.pla.sample.R;
+import com.sprzny.meitu.R;
 
 import android.content.Context;
 import android.util.AttributeSet;
