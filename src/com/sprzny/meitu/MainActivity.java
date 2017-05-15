@@ -174,6 +174,9 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         faxianButton = (Button)findViewById(R.id.faxian);
         bannertitleView = (TextView) findViewById(R.id.bannertitle);
         
+        // 默认选中精选按钮
+        exchangeTab(true);
+        
         // 图片列表
         mAdapterView = (XListView) findViewById(R.id.list);
         mAdapterView.setPullLoadEnable(true);
@@ -194,13 +197,16 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         
         // 发现列表
         gview = (GridView) findViewById(R.id.gview);
-        categoryAdapter = new CategoryAdapter(this, createCategorys());
+        categoryAdapter = new CategoryAdapter(this, getCategory());
         //配置适配器
         gview.setAdapter(categoryAdapter);
         gview.setOnItemClickListener(new ItemClickListener());
-        
-        // 默认选中精选按钮
-        exchangeTab(true);
+    }
+    
+    // TODO 现在同步去获取
+    List<CategoryInfo> categorys = SprznyService.createCategorys();
+    private List<CategoryInfo> getCategory() {
+        return categorys;
     }
     
     /**
@@ -208,13 +214,11 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
      *
      */
     class  ItemClickListener implements OnItemClickListener {
-
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                 long id) {
             isMain = false;
-            
-            CategoryInfo categoryInfo = createCategorys().get(position);
+            CategoryInfo categoryInfo = getCategory().get(position);
             categoryid = categoryInfo.getCategoryId();
             currentPage = 0;
             
@@ -244,30 +248,6 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         mainBannerLayout.setVisibility(View.VISIBLE);
         contentBannerLayout.setVisibility(View.GONE);
     }
-    
-    
-    /**
-     * 生成美图类别
-     * 
-     * @return
-     */
-    private List<CategoryInfo> createCategorys() {
-        List<CategoryInfo> list = new LinkedList<CategoryInfo>();
-        
-        list.add(new CategoryInfo(1, "性感美女", R.drawable.meinv1));
-        list.add(new CategoryInfo(2, "丝袜美女", R.drawable.meinv2));
-        list.add(new CategoryInfo(3, "韩国美女", R.drawable.meinv3));
-        list.add(new CategoryInfo(4, "外国美女", R.drawable.meinv4));
-        list.add(new CategoryInfo(5, "比基尼美女", R.drawable.meinv5));
-        list.add(new CategoryInfo(6, "内衣美女", R.drawable.meinv6));
-        list.add(new CategoryInfo(7, "清纯美女", R.drawable.meinv7));
-        list.add(new CategoryInfo(8, "长腿美女", R.drawable.meinv8));
-        list.add(new CategoryInfo(9, "美女明星", R.drawable.meinv9));
-        list.add(new CategoryInfo(10, "街拍美女", R.drawable.meinv10));
-        
-        return list;
-    }
-    
     
     /**
      * 实时精选按钮
