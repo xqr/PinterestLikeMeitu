@@ -212,20 +212,7 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
      * @return
      */
     private List<CategoryInfo> createCategorys() {
-        List<CategoryInfo> list = new LinkedList<CategoryInfo>();
-        
-        list.add(new CategoryInfo(1, "性感美女", R.drawable.meinv1));
-        list.add(new CategoryInfo(2, "丝袜美女", R.drawable.meinv2));
-        list.add(new CategoryInfo(3, "韩国美女", R.drawable.meinv3));
-        list.add(new CategoryInfo(4, "外国美女", R.drawable.meinv4));
-        list.add(new CategoryInfo(5, "比基尼美女", R.drawable.meinv5));
-        list.add(new CategoryInfo(6, "内衣美女", R.drawable.meinv6));
-        list.add(new CategoryInfo(7, "清纯美女", R.drawable.meinv7));
-        list.add(new CategoryInfo(8, "长腿美女", R.drawable.meinv8));
-        list.add(new CategoryInfo(9, "美女明星", R.drawable.meinv9));
-        list.add(new CategoryInfo(10, "街拍美女", R.drawable.meinv10));
-        
-        return list;
+        return SprznyService.createCategorys();
     }
     
     
