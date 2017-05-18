@@ -40,6 +40,39 @@ public class SprznyService {
     }
     
     /**
+     * 从服务端获取需要展示的类别
+     * 
+     * @return
+     */
+    public static List<CategoryInfo> getShowCategorys() {
+        List<CategoryInfo> list = createCategorys();
+        
+        List<CategoryInfo> result = new ArrayList<CategoryInfo>();
+        try {
+            String json = Helper.getStringFromUrl("http://www.sprzny.com/mmonly/showid/");
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode jsonNodes = mapper.readValue(json, JsonNode.class);
+            if (jsonNodes != null) {
+                String ids = jsonNodes.get("id").getTextValue();
+                for (String item : ids.split(",")) {
+                    for (CategoryInfo data : list) {
+                        if (item.equals(String.valueOf(data.getCategoryId()))) {
+                            result.add(data);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            Log.e("IOException is : ", e.toString());
+        }
+        if (result.isEmpty()) {
+            return list;
+        }
+        return result;
+    }
+    
+    
+    /**
      * 精选
      * 
      * @return
@@ -57,7 +90,6 @@ public class SprznyService {
             json = Helper.getStringFromUrl(url);
         } catch (IOException e) {
             Log.e("IOException is : ", e.toString());
-            e.printStackTrace();
             return new ArrayList<DuitangInfo>();
         }
         

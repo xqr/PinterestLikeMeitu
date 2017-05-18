@@ -197,17 +197,38 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         
         // 发现列表
         gview = (GridView) findViewById(R.id.gview);
-        categoryAdapter = new CategoryAdapter(this, getCategory());
-        //配置适配器
-        gview.setAdapter(categoryAdapter);
-        gview.setOnItemClickListener(new ItemClickListener());
+        new CategoryTask().execute();
     }
     
-    // TODO 现在同步去获取
-    List<CategoryInfo> categorys = SprznyService.createCategorys();
-    private List<CategoryInfo> getCategory() {
-        return categorys;
+//    // TODO 现在同步去获取
+//    List<CategoryInfo> categorys = SprznyService.createCategorys();
+//    private List<CategoryInfo> getCategory() {
+//        return categorys;
+//    }
+    
+    private List<CategoryInfo> categorys = null;
+    /**
+     * 加载分类类别
+     */
+    private class CategoryTask extends AsyncTask<String, Integer, List<CategoryInfo>> {
+        
+        @Override
+        protected List<CategoryInfo> doInBackground(String... params) {
+            if (categorys == null) {
+                categorys = SprznyService.getShowCategorys();
+            } 
+            return categorys;
+        }
+        
+        @Override
+        protected void onPostExecute(List<CategoryInfo> result) {
+            categoryAdapter = new CategoryAdapter(MainActivity.this, result);
+            //配置适配器
+            gview.setAdapter(categoryAdapter);
+            gview.setOnItemClickListener(new ItemClickListener());
+        }
     }
+    
     
     /**
      * 网格点击事件
@@ -217,8 +238,11 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                 long id) {
+            if (categorys == null) {
+                return;
+            }
             isMain = false;
-            CategoryInfo categoryInfo = getCategory().get(position);
+            CategoryInfo categoryInfo = categorys.get(position);
             categoryid = categoryInfo.getCategoryId();
             currentPage = 0;
             
