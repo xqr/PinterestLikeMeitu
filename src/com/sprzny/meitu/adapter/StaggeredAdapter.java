@@ -15,8 +15,11 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.dodola.model.DuitangInfo;
+import com.dodowaterfall.Options;
 import com.dodowaterfall.widget.ScaleImageView;
 import com.example.android.bitmapfun.util.ImageFetcher;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sprzny.meitu.R;
 import com.sprzny.meitu.AlbumActivity;
 
@@ -26,11 +29,16 @@ public class StaggeredAdapter extends BaseAdapter {
     private XListView mListView;
     private ImageFetcher mImageFetcher;
     
+    protected ImageLoader imageLoader = ImageLoader.getInstance();
+    private DisplayImageOptions options;
+    
     public StaggeredAdapter(Context context, XListView xListView, ImageFetcher xImageFetcher) {
         mContext = context;
         mInfos = new LinkedList<DuitangInfo>();
         mListView = xListView;
         mImageFetcher = xImageFetcher;
+        
+        options = Options.getListOptions();
     }
 
     @Override
@@ -53,7 +61,9 @@ public class StaggeredAdapter extends BaseAdapter {
         holder.imageView.setImageWidth(duitangInfo.getWidth());
         holder.imageView.setImageHeight(duitangInfo.getHeight());
         holder.contentView.setText(duitangInfo.getTitle());
-        mImageFetcher.loadImage(duitangInfo.getIsrc(), duitangInfo.getSource(), holder.imageView);
+//        mImageFetcher.loadImage(duitangInfo.getIsrc(), duitangInfo.getSource(), holder.imageView);
+        
+        imageLoader.displayImage(duitangInfo.getIsrc(), holder.imageView, options);
         
         holder.imageView.setOnClickListener(new OnClickListener() {
             @Override

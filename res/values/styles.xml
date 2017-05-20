@@ -2,4 +2,19 @@
 
     <style name="AppTheme" parent="android:Theme.Light" />
 
+    
+    <style name="full_image_progressbar" parent="@android:style/Widget.ProgressBar.Large">
+        <item name="android:indeterminateDrawable">@drawable/progress_large_holo</item>
+    </style>
+    
+    <style name="full_image_retry_text">
+        <item name="android:textSize">15.0sp</item>
+        <item name="android:textColor">#ffeeeeee</item>
+    </style>
+    
+    <style name="full_image_progress_text">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#ffeeeeee</item>
+    </style>
+    
 </resources>

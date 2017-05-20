@@ -45,11 +45,11 @@ public class AlbumActivity extends FragmentActivity {
         piccountView = (TextView) findViewById(R.id.piccount);
         bannertitleView = (TextView) findViewById(R.id.zhuanjizhongcao);
         
-        mImageFetcher = new ImageFetcher(this, 240);
-        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
-        ImageCacheParams imageCacheParams = new ImageCacheParams("plameitu");
-        imageCacheParams.clearDiskCacheOnStart = true;
-        mImageFetcher.setImageCache(ImageCache.findOrCreateCache(this, imageCacheParams));
+//        mImageFetcher = new ImageFetcher(this, 240);
+//        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
+//        ImageCacheParams imageCacheParams = new ImageCacheParams("plameitu");
+//        imageCacheParams.clearDiskCacheOnStart = true;
+//        mImageFetcher.setImageCache(ImageCache.findOrCreateCache(this, imageCacheParams));
         
         if (mAdapter == null) {
             
@@ -79,7 +79,7 @@ public class AlbumActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mImageFetcher.setExitTasksEarly(false);
+//        mImageFetcher.setExitTasksEarly(false);
         MobclickAgent.onPause(this);
     }
 

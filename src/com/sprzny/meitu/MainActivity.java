@@ -182,11 +182,11 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
         mAdapterView.setPullLoadEnable(true);
         mAdapterView.setXListViewListener(this);
         
-        mImageFetcher = new ImageFetcher(this, 240);
-        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
-        ImageCacheParams imageCacheParams = new ImageCacheParams("plameitu");
-        imageCacheParams.clearDiskCacheOnStart = true;
-        mImageFetcher.setImageCache(ImageCache.findOrCreateCache(this, imageCacheParams));
+//        mImageFetcher = new ImageFetcher(this, 240);
+//        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
+//        ImageCacheParams imageCacheParams = new ImageCacheParams("plameitu");
+//        imageCacheParams.clearDiskCacheOnStart = true;
+//        mImageFetcher.setImageCache(ImageCache.findOrCreateCache(this, imageCacheParams));
         
         if (mAdapter == null) {
             mAdapter = new StaggeredAdapter(this, mAdapterView, mImageFetcher);
@@ -334,7 +334,7 @@ public class MainActivity extends FragmentActivity implements IXListViewListener
     @Override
     protected void onResume() {
         super.onResume();
-        mImageFetcher.setExitTasksEarly(false);
+//        mImageFetcher.setExitTasksEarly(false);
         MobclickAgent.onResume(this);
     }
 

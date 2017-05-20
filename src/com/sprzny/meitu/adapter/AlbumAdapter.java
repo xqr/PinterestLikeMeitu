@@ -3,9 +3,12 @@ package com.sprzny.meitu.adapter;
 import me.maxwin.view.XListView;
 
 import com.dodola.model.DuitangInfo;
+import com.dodowaterfall.Options;
 import com.dodowaterfall.widget.ScaleImageView;
 import com.example.android.bitmapfun.util.ImageFetcher;
 import com.huewu.pla.lib.MultiColumnListView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sprzny.meitu.R;
 import com.sprzny.meitu.AlbumActivity;
 import com.sprzny.meitu.ShowPhotoActivity;
@@ -27,11 +30,16 @@ public class AlbumAdapter extends BaseAdapter {
     private MultiColumnListView mListView;
     private ImageFetcher mImageFetcher;
     
+    protected ImageLoader imageLoader = ImageLoader.getInstance();
+    private DisplayImageOptions options;
+    
     public AlbumAdapter(Context context, DuitangInfo duitangInfo, MultiColumnListView xListView, ImageFetcher xImageFetcher) {
         mContext = context;
         mDuitangInfo = duitangInfo;
         mListView = xListView;
         mImageFetcher = xImageFetcher;
+        
+        options = Options.getListOptions();
     }
 
     @Override
@@ -55,12 +63,12 @@ public class AlbumAdapter extends BaseAdapter {
         holder.contentView.setText(mDuitangInfo.getTitle());
         
         String imageUrl = mDuitangInfo.getImages().get(position);
-        mImageFetcher.loadImage(imageUrl, mDuitangInfo.getSource(), holder.imageView);
+//        mImageFetcher.loadImage(imageUrl, mDuitangInfo.getSource(), holder.imageView);
+        imageLoader.displayImage(imageUrl, holder.imageView, options);
         
         holder.imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("duitangInfo", mDuitangInfo);
