@@ -1,17 +1,22 @@
 package com.sprzny.meitu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dodola.model.CategoryInfo;
 import com.dodowaterfall.BaseTools;
 import com.huewu.pla.sample.R;
+import com.sprzny.meitu.adapter.NewsFragmentPagerAdapter;
+import com.sprzny.meitu.fragment.NewsFragment;
 import com.sprzny.meitu.service.SprznyService;
 import com.sprzny.meitu.view.ColumnHorizontalScrollView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +39,7 @@ public class ContentActivity extends FragmentActivity {
     private int mScreenWidth = 0;
     /** Item宽度 */
     private int mItemWidth = 0;
+    private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
     
     /** 自定义HorizontalScrollView */
     private ColumnHorizontalScrollView mColumnHorizontalScrollView;
@@ -89,6 +95,7 @@ public class ContentActivity extends FragmentActivity {
         @Override
         protected void onPostExecute(List<CategoryInfo> result) {
             initTabColumn(result);
+            initFragment(result);
         }
     }
     
@@ -159,4 +166,43 @@ public class ContentActivity extends FragmentActivity {
             checkView.setSelected(ischeck);
         }
     }
+    
+    /** 
+     *  初始化Fragment
+     * */
+    private void initFragment(final List<CategoryInfo> result) {
+        fragments.clear();//清空
+        int count =  result.size();
+        for(int i = 0; i< count;i++){
+            Bundle data = new Bundle();
+            data.putString("text", result.get(i).getCategoryTitle());
+            data.putInt("id", result.get(i).getCategoryId());
+            NewsFragment newfragment = new NewsFragment();
+            newfragment.setArguments(data);
+            fragments.add(newfragment);
+        }
+        NewsFragmentPagerAdapter mAdapetr = new NewsFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+//      mViewPager.setOffscreenPageLimit(0);
+        mViewPager.setAdapter(mAdapetr);
+        mViewPager.setOnPageChangeListener(pageListener);
+    }
+    /** 
+     *  ViewPager切换监听方法
+     * */
+    public OnPageChangeListener pageListener= new OnPageChangeListener(){
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            mViewPager.setCurrentItem(position);
+            selectTab(position);
+        }
+    };
 }// end of class

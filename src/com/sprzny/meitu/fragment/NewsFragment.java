@@ -6,6 +6,7 @@ import java.util.List;
 import com.dodola.model.DuitangInfo;
 import com.dodowaterfall.Helper;
 import com.huewu.pla.sample.R;
+import com.sprzny.meitu.adapter.NewStaggeredAdapter;
 import com.sprzny.meitu.adapter.StaggeredAdapter;
 import com.sprzny.meitu.service.SprznyService;
 import com.sprzny.meitu.view.HeadListView;
@@ -36,7 +37,7 @@ public class NewsFragment extends Fragment  implements IXListViewListener {
 	private Activity activity;
 	
 	private HeadListView mListView = null;
-	private StaggeredAdapter mAdapter = null;
+	private NewStaggeredAdapter mAdapter = null;
 	
 	// 当前频道title和频道ID
 	private String text;
@@ -62,9 +63,8 @@ public class NewsFragment extends Fragment  implements IXListViewListener {
         mListView.setPullLoadEnable(true);
         mListView.setXListViewListener(this);
         
-        // TODO 图片缓存
         if (mAdapter == null) {
-//            mAdapter = new StaggeredAdapter(, mListView, null);
+            mAdapter = new NewStaggeredAdapter(activity, mListView);
         }
         mListView.setAdapter(mAdapter);
         // 加载1页
@@ -83,7 +83,8 @@ public class NewsFragment extends Fragment  implements IXListViewListener {
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		if (isVisibleToUser) {
-//			//fragment可见时加载数据
+			//fragment可见时加载数据
+		    
 //			if(newsList !=null && newsList.size() !=0){
 //				handler.obtainMessage(SET_NEWSLIST).sendToTarget();
 //			}else{
@@ -172,7 +173,6 @@ public class NewsFragment extends Fragment  implements IXListViewListener {
      *            1为下拉刷新 2为加载更多
      */
     private void AddItemToContainer(int pageindex, int type) {
-        // TODO 
         if (task.getStatus() != Status.RUNNING) {
             ContentTask task = new ContentTask(activity, type);
             // 加载
@@ -195,13 +195,11 @@ public class NewsFragment extends Fragment  implements IXListViewListener {
 
     @Override
     public void onRefresh() {
-        // TODO Auto-generated method stub
-        
+        AddItemToContainer(++currentPage, 1);
     }
 
     @Override
     public void onLoadMore() {
-        // TODO Auto-generated method stub
-        
+        AddItemToContainer(++currentPage, 2);
     }
 }

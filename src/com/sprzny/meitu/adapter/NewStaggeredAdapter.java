@@ -23,21 +23,20 @@ import com.huewu.pla.sample.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sprzny.meitu.AlbumActivity;
+import com.sprzny.meitu.view.HeadListView;
 
-public class StaggeredAdapter extends BaseAdapter {
+public class NewStaggeredAdapter extends BaseAdapter {
     private Context mContext;
     private LinkedList<DuitangInfo> mInfos;
-    private XListView mListView;
-    private ImageFetcher mImageFetcher;
+    private HeadListView mListView;
     
     protected ImageLoader imageLoader = ImageLoader.getInstance();
     private DisplayImageOptions options;
     
-    public StaggeredAdapter(Context context, XListView xListView, ImageFetcher xImageFetcher) {
+    public NewStaggeredAdapter(Context context, HeadListView xListView) {
         mContext = context;
         mInfos = new LinkedList<DuitangInfo>();
         mListView = xListView;
-        mImageFetcher = xImageFetcher;
         
         options = Options.getListOptions();
     }
@@ -62,7 +61,6 @@ public class StaggeredAdapter extends BaseAdapter {
         holder.imageView.setImageWidth(duitangInfo.getWidth());
         holder.imageView.setImageHeight(duitangInfo.getHeight());
         holder.contentView.setText(duitangInfo.getTitle());
-//        mImageFetcher.loadImage(duitangInfo.getIsrc(), duitangInfo.getSource(), holder.imageView);
         imageLoader.displayImage(duitangInfo.getIsrc(), holder.imageView, options);
         
         holder.imageView.setOnClickListener(new OnClickListener() {
