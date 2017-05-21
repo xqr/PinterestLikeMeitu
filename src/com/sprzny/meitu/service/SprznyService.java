@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.dodola.model.CategoryInfo;
 import com.dodola.model.DuitangInfo;
-import com.dodowaterfall.Helper;
+import com.dodowaterfall.HttpClientUtils;
 import com.huewu.pla.sample.R;
 
 public class SprznyService {
@@ -48,7 +48,7 @@ public class SprznyService {
         List<CategoryInfo> result = new ArrayList<CategoryInfo>();
         result.add(new CategoryInfo(0, "推荐美女", R.drawable.meinv1));
         try {
-            String json = Helper.getStringFromUrl("http://www.sprzny.com/mmonly/showid/");
+            String json = HttpClientUtils.getResponse("http://www.sprzny.com/mmonly/showid/");
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNodes = mapper.readValue(json, JsonNode.class);
             if (jsonNodes != null) {
@@ -83,12 +83,7 @@ public class SprznyService {
         }
         
         String json = "";
-        try {
-            json = Helper.getStringFromUrl(url);
-        } catch (IOException e) {
-            Log.e("IOException is : ", e.toString());
-            return new ArrayList<DuitangInfo>();
-        }
+        json = HttpClientUtils.getResponse(url);
         
         return parseNewsJSON(json);
     }

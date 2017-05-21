@@ -8,6 +8,7 @@ import com.dodowaterfall.BaseTools;
 import com.huewu.pla.sample.R;
 import com.sprzny.meitu.adapter.NewsFragmentPagerAdapter;
 import com.sprzny.meitu.fragment.NewsFragment;
+import com.sprzny.meitu.fragment.VideosFragment;
 import com.sprzny.meitu.service.SprznyService;
 import com.sprzny.meitu.view.ColumnHorizontalScrollView;
 
@@ -177,7 +178,8 @@ public class ContentActivity extends FragmentActivity {
             Bundle data = new Bundle();
             data.putString("text", result.get(i).getCategoryTitle());
             data.putInt("id", result.get(i).getCategoryId());
-            NewsFragment newfragment = new NewsFragment();
+//            NewsFragment newfragment = new NewsFragment();
+            VideosFragment newfragment = new VideosFragment();
             newfragment.setArguments(data);
             fragments.add(newfragment);
         }
