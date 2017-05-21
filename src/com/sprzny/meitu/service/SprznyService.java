@@ -29,7 +29,7 @@ public class SprznyService {
         list.add(new CategoryInfo(2, "丝袜美女", R.drawable.meinv2));
         list.add(new CategoryInfo(3, "韩国美女", R.drawable.meinv3));
         list.add(new CategoryInfo(4, "外国美女", R.drawable.meinv4));
-        list.add(new CategoryInfo(5, "比基尼美女", R.drawable.meinv5));
+        list.add(new CategoryInfo(5, "比基尼", R.drawable.meinv5));
         list.add(new CategoryInfo(6, "内衣美女", R.drawable.meinv6));
         list.add(new CategoryInfo(7, "清纯美女", R.drawable.meinv7));
         list.add(new CategoryInfo(8, "长腿美女", R.drawable.meinv8));
@@ -46,6 +46,7 @@ public class SprznyService {
      */
     public static List<CategoryInfo> getShowCategorys() {
         List<CategoryInfo> result = new ArrayList<CategoryInfo>();
+        result.add(new CategoryInfo(0, "推荐美女", R.drawable.meinv1));
         try {
             String json = Helper.getStringFromUrl("http://www.sprzny.com/mmonly/showid/");
             ObjectMapper mapper = new ObjectMapper();

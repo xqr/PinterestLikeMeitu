@@ -33,9 +33,6 @@
         <activity
             android:name="com.sprzny.meitu.ShowPhotoActivity">
         </activity>
-        <activity 
-            android:name="com.sprzny.meitu.MainActivity">
-        </activity>
     </application>
 
 </manifest>

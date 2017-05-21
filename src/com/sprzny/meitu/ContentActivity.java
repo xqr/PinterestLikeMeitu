@@ -57,7 +57,7 @@ public class ContentActivity extends FragmentActivity {
         setContentView(R.layout.activity_content);
         
         mScreenWidth = BaseTools.getWindowsWidth(this);
-        mItemWidth = mScreenWidth / 7;// 一个Item宽度为屏幕的1/7
+        mItemWidth = mScreenWidth / 5;// 一个Item宽度为屏幕的1/7
         initView();
     }
     

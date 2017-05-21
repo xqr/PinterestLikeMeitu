@@ -2,9 +2,6 @@ package com.sprzny.meitu.adapter;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import me.maxwin.view.XListView;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +15,6 @@ import android.widget.TextView;
 import com.dodola.model.DuitangInfo;
 import com.dodowaterfall.Options;
 import com.dodowaterfall.widget.ScaleImageView;
-import com.example.android.bitmapfun.util.ImageFetcher;
 import com.huewu.pla.sample.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

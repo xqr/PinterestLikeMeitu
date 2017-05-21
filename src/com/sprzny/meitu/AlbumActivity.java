@@ -1,9 +1,6 @@
  package com.sprzny.meitu;
 
 import com.dodola.model.DuitangInfo;
-import com.example.android.bitmapfun.util.ImageCache;
-import com.example.android.bitmapfun.util.ImageFetcher;
-import com.example.android.bitmapfun.util.ImageCache.ImageCacheParams;
 import com.huewu.pla.lib.MultiColumnListView;
 import com.huewu.pla.sample.R;
 import com.sprzny.meitu.adapter.AlbumAdapter;
@@ -16,7 +13,6 @@ import android.widget.TextView;
 
 public class AlbumActivity extends FragmentActivity {
     
-    private ImageFetcher mImageFetcher;
     private MultiColumnListView mAdapterView = null;
     private AlbumAdapter mAdapter = null;
     
@@ -41,11 +37,6 @@ public class AlbumActivity extends FragmentActivity {
         piccountView = (TextView) findViewById(R.id.piccount);
         bannertitleView = (TextView) findViewById(R.id.zhuanjizhongcao);
         
-        mImageFetcher = new ImageFetcher(this, 240);
-        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
-        ImageCacheParams imageCacheParams = new ImageCacheParams("plameitu");
-        imageCacheParams.clearDiskCacheOnStart = true;
-        mImageFetcher.setImageCache(new ImageCache(this, imageCacheParams));
         if (mAdapter == null) {
             
             Intent intent = getIntent();
@@ -54,7 +45,7 @@ public class AlbumActivity extends FragmentActivity {
                 bannertitleView.setText(duitangInfo.getTitle());
                 piccountView.setText(duitangInfo.getImages().size() + "张图片");
             }
-            mAdapter = new AlbumAdapter(this, duitangInfo, mAdapterView, mImageFetcher);
+            mAdapter = new AlbumAdapter(this, duitangInfo, mAdapterView);
         }
         
         mAdapterView.setAdapter(mAdapter);
@@ -75,8 +66,6 @@ public class AlbumActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mImageFetcher.setExitTasksEarly(false);
-//        mAdapterView.setAdapter(mAdapter);
     }
 
     @Override

@@ -1,36 +1,24 @@
 package com.sprzny.meitu.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.dodola.model.DuitangInfo;
 import com.dodowaterfall.Helper;
 import com.huewu.pla.sample.R;
 import com.sprzny.meitu.adapter.NewStaggeredAdapter;
-import com.sprzny.meitu.adapter.StaggeredAdapter;
 import com.sprzny.meitu.service.SprznyService;
 import com.sprzny.meitu.view.HeadListView;
 import com.sprzny.meitu.view.HeadListView.IXListViewListener;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.AsyncTask.Status;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 public class NewsFragment extends Fragment  implements IXListViewListener {
 	private final static String TAG = "NewsFragment";
