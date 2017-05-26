@@ -2,16 +2,37 @@ package com.sprzny.meitu.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dodola.model.CategoryInfo;
 import com.dodola.model.VideoInfo;
 import com.dodowaterfall.HttpClientUtils;
+import com.huewu.pla.sample.R;
 
 public class BaiduVideoService {
+    
+    public static List<CategoryInfo> createCategorys() {
+        List<CategoryInfo> list = new LinkedList<CategoryInfo>();
+        
+        list.add(new CategoryInfo(1033, "推荐", R.drawable.meinv1));
+        list.add(new CategoryInfo(1060, "影视", R.drawable.meinv1));
+        list.add(new CategoryInfo(1059, "搞笑", R.drawable.meinv1));
+        list.add(new CategoryInfo(1058, "音乐", R.drawable.meinv1));
+        list.add(new CategoryInfo(1062, "小品", R.drawable.meinv1));
+        list.add(new CategoryInfo(1061, "娱乐", R.drawable.meinv1));
+        list.add(new CategoryInfo(1063, "社会", R.drawable.meinv1));
+        list.add(new CategoryInfo(1066, "生活", R.drawable.meinv1));
+        list.add(new CategoryInfo(1064, "猎奇", R.drawable.meinv1));
+        list.add(new CategoryInfo(1067, "游戏", R.drawable.meinv1));
+        list.add(new CategoryInfo(1065, "呆萌", R.drawable.meinv1));
+        
+        return list;
+    }
     
     /**
      * 查询数据
@@ -35,7 +56,7 @@ public class BaiduVideoService {
         headers.put("X-Requested-With", "XMLHttpReques");
         
         String content = HttpClientUtils.postResponse(url, params, headers);
-        return parseVideosJSON(content);
+        return parseVideosJSON(channelId, content);
     }
     
     /**
@@ -44,7 +65,7 @@ public class BaiduVideoService {
      * @param json
      * @return
      */
-    private static List<VideoInfo> parseVideosJSON(String json) {
+    private static List<VideoInfo> parseVideosJSON(String channelId, String json) {
         List<VideoInfo> videoList = new ArrayList<VideoInfo>();
         if (json == null) {
             return videoList;
@@ -71,6 +92,9 @@ public class BaiduVideoService {
                     videoInfo.setUrl(node.get("url").getTextValue());
                     videoInfo.setUpdateTime(node.get("updateTime").getTextValue());
                     videoInfo.setSource(node.get("source").getTextValue());
+                    videoInfo.setId(node.get("id").getIntValue());
+                    videoInfo.setDetailUrl("http://cpu.baidu.com/"+channelId+"/abc00564/detail/"+videoInfo.getId()+"/video?foward=list");
+                    videoInfo.setDuration(node.get("duration").getIntValue());
                     
                     videoList.add(videoInfo);
                 }

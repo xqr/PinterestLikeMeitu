@@ -9,6 +9,7 @@ import com.huewu.pla.sample.R;
 import com.sprzny.meitu.adapter.NewsFragmentPagerAdapter;
 import com.sprzny.meitu.fragment.NewsFragment;
 import com.sprzny.meitu.fragment.VideosFragment;
+import com.sprzny.meitu.service.BaiduVideoService;
 import com.sprzny.meitu.service.SprznyService;
 import com.sprzny.meitu.view.ColumnHorizontalScrollView;
 
@@ -58,7 +59,7 @@ public class ContentActivity extends FragmentActivity {
         setContentView(R.layout.activity_content);
         
         mScreenWidth = BaseTools.getWindowsWidth(this);
-        mItemWidth = mScreenWidth / 5;// 一个Item宽度为屏幕的1/7
+        mItemWidth = mScreenWidth / 7;// 一个Item宽度为屏幕的1/7
         initView();
     }
     
@@ -90,7 +91,7 @@ public class ContentActivity extends FragmentActivity {
         
         @Override
         protected List<CategoryInfo> doInBackground(String... params) {
-            return SprznyService.getShowCategorys();
+            return BaiduVideoService.createCategorys();
         }
         
         @Override
@@ -136,7 +137,7 @@ public class ContentActivity extends FragmentActivity {
                               selectTab(i);
                           }
                       }
-                      Toast.makeText(getApplicationContext(), result.get(v.getId()).getCategoryTitle(), Toast.LENGTH_SHORT).show();
+//                      Toast.makeText(getApplicationContext(), result.get(v.getId()).getCategoryTitle(), Toast.LENGTH_SHORT).show();
                 }
             });
             mRadioGroup_content.addView(columnTextView, i ,params);
@@ -177,7 +178,8 @@ public class ContentActivity extends FragmentActivity {
         for(int i = 0; i< count;i++){
             Bundle data = new Bundle();
             data.putString("text", result.get(i).getCategoryTitle());
-            data.putInt("id", result.get(i).getCategoryId());
+            data.putString("id", String.valueOf(result.get(i).getCategoryId()));
+//            data.putInt("id", result.get(i).getCategoryId());
 //            NewsFragment newfragment = new NewsFragment();
             VideosFragment newfragment = new VideosFragment();
             newfragment.setArguments(data);

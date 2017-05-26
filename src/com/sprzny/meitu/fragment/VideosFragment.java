@@ -40,9 +40,7 @@ public class VideosFragment extends Fragment  implements IXListViewListener {
 	    // 参数传递
 		Bundle args = getArguments();
 		text = args != null ? args.getString("text") : "";
-		// TODO
-		channel_id = "1033";
-		//		channel_id = args != null ? args.getString("id") : "1033";
+		channel_id = args != null ? args.getString("id") : "1033";
 		
 		super.onCreate(savedInstanceState);
 	}

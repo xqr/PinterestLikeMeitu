@@ -8,6 +8,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.TbsListener;
 
 import android.app.Application;
 import android.content.Context;
@@ -19,7 +21,9 @@ public class AppApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		initImageLoader(getApplicationContext());
+		Context context = getApplicationContext();
+		initImageLoader(context);
+		QbSdkInit(context);
 		mAppApplication = this;
 	}
 	
@@ -59,5 +63,40 @@ public class AppApplication extends Application {
 				.build();
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);//全局初始化此配置
+	}
+	
+	/** 初始化X5内核 */
+	public static void QbSdkInit(Context context) {
+	    //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+            }
+            
+            @Override
+            public void onCoreInitFinished() {
+            }
+        };
+        
+         QbSdk.setTbsListener(new TbsListener() {
+             @Override
+             public void onDownloadFinish(int i) {
+                // Log.d("0828","onDownloadFinish");
+             }
+
+             @Override
+             public void onInstallFinish(int i) {
+                // Log.d("0828","onInstallFinish");
+             }
+
+             @Override
+             public void onDownloadProgress(int i) {
+                // Log.d("0828","onDownloadProgress:"+i);
+             }
+         });
+                
+        //x5内核初始化接口
+        QbSdk.initX5Environment(context,  cb);
 	}
 }

@@ -1,6 +1,8 @@
 package com.dodola.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class VideoInfo implements Serializable {
 
@@ -12,6 +14,41 @@ public class VideoInfo implements Serializable {
     private String url;
     private String source;
     private int playbackCount;
+    private int id;
+    private String detailUrl;
+    /**
+     * 视频长度，单位为秒
+     */
+    private int duration;
+    
+    /**
+     * 格式化的视频长度
+     * 
+     * @return
+     */
+    public String getFormatDuration() {
+        SimpleDateFormat formatter = new SimpleDateFormat("mm:ss", Locale.CHINA);
+        return formatter.format(this.duration * 1000);
+    }
+    
+    public int getDuration() {
+        return duration;
+    }
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+    public String getDetailUrl() {
+        return detailUrl;
+    }
+    public void setDetailUrl(String detailUrl) {
+        this.detailUrl = detailUrl;
+    }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getThumbUrl() {
         return thumbUrl;
     }
@@ -50,7 +87,7 @@ public class VideoInfo implements Serializable {
     }
     
     public int getWidth() {
-        return 550;
+        return 375;
     }
 
 //    public void setWidth(int width) {
@@ -58,7 +95,7 @@ public class VideoInfo implements Serializable {
 //    }
 
     public int getHeight() {
-        return 902;
+        return 210;
     }
 
 //  public void setHeight(int height) {

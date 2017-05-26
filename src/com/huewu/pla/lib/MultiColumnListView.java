@@ -74,7 +74,7 @@ public class MultiColumnListView extends PLA_ListView {
 
             int landColNumber = a.getInteger(R.styleable.PinterestLikeAdapterView_plaLandscapeColumnNumber, 3);
             // 显示列数
-            int defColNumber = a.getInteger(R.styleable.PinterestLikeAdapterView_plaColumnNumber, 2);
+            int defColNumber = a.getInteger(R.styleable.PinterestLikeAdapterView_plaColumnNumber, 1);
 
             if (mFrameRect.width() > mFrameRect.height() && landColNumber != -1) {
                 mColumnNumber = (landColNumber);

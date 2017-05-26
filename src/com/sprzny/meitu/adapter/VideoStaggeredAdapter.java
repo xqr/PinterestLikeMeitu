@@ -5,7 +5,6 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore.Video;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,15 +12,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.dodola.model.DuitangInfo;
 import com.dodola.model.VideoInfo;
 import com.dodowaterfall.Options;
 import com.dodowaterfall.widget.ScaleImageView;
 import com.huewu.pla.sample.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.sprzny.meitu.AlbumActivity;
+import com.sprzny.meitu.VideoActivity;
 import com.sprzny.meitu.view.HeadListView;
+import com.tencent.smtt.sdk.TbsVideo;
 
 public class VideoStaggeredAdapter extends BaseAdapter {
     private Context mContext;
@@ -51,6 +50,7 @@ public class VideoStaggeredAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.imageView = (ScaleImageView) convertView.findViewById(R.id.news_pic);
             holder.contentView = (TextView) convertView.findViewById(R.id.news_title);
+            holder.bofangdurationView = (TextView) convertView.findViewById(R.id.bofangduration);
             convertView.setTag(holder);
         }
 
@@ -59,18 +59,20 @@ public class VideoStaggeredAdapter extends BaseAdapter {
         holder.imageView.setImageWidth(duitangInfo.getWidth());
         holder.imageView.setImageHeight(duitangInfo.getHeight());
         holder.contentView.setText(duitangInfo.getTitle());
+        holder.bofangdurationView.setText(duitangInfo.getFormatDuration());
         imageLoader.displayImage(duitangInfo.getThumbUrl(), holder.imageView, options);
         
         holder.imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO 
+                TbsVideo.openVideo(mContext, duitangInfo.getUrl());
+//                
 //                Intent intent = new Intent();
 //                Bundle bundle = new Bundle();
 //                bundle.putSerializable("duitangInfo", duitangInfo);
 //                intent.putExtras(bundle);
 //                
-//                intent.setClass(mContext, AlbumActivity.class);  
+//                intent.setClass(mContext, VideoActivity.class);  
 //                mContext.startActivity(intent);
             }
         });
@@ -81,7 +83,7 @@ public class VideoStaggeredAdapter extends BaseAdapter {
     class ViewHolder {
         ScaleImageView imageView;
         TextView contentView;
-        TextView timeView;
+        TextView bofangdurationView;
     }
 
     @Override

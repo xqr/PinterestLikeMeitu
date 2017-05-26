@@ -16,6 +16,7 @@
 
 package com.huewu.pla.lib.internal;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -467,7 +468,15 @@ public abstract class PLA_AbsListView extends PLA_AdapterView<ListAdapter> imple
 
         setVerticalScrollBarEnabled(true);
         TypedArray a = context.obtainStyledAttributes(R.styleable.View);
-        initializeScrollbars(a);
+//        initializeScrollbars(a);
+        // TODO 
+        try {
+            // initializeScrollbars(TypedArray)
+            Method initializeScrollbars = View.class.getDeclaredMethod("initializeScrollbars", TypedArray.class);
+            initializeScrollbars.invoke(this, a);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         a.recycle();
     }
 
