@@ -45,7 +45,8 @@ public class ColumnHorizontalScrollView extends HorizontalScrollView {
 	protected void onScrollChanged(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
 		super.onScrollChanged(paramInt1, paramInt2, paramInt3, paramInt4);
 		shade_ShowOrHide();
-		if(!activity.isFinishing() && ll_content !=null && leftImage!=null && rightImage!=null && ll_more!=null && rl_column !=null){
+		if(!activity.isFinishing() && ll_content !=null && leftImage!=null 
+		        && rightImage!=null && ll_more!=null && rl_column !=null){
 			if(ll_content.getWidth() <= mScreenWitdh) {
 				leftImage.setVisibility(View.GONE);
 				rightImage.setVisibility(View.GONE);

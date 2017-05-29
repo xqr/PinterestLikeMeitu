@@ -60,8 +60,8 @@
             <!-- 右侧加号 -->
             <ImageView
                 android:id="@+id/button_more_columns"
-                android:layout_width="40.0dip"
-                android:layout_height="40.0dip"
+                android:layout_width="1dip"
+                android:layout_height="1dip"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/channel_glide_day_bg" />
         </LinearLayout>

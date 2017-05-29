@@ -58,7 +58,7 @@ public class ContentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_content);
         
         mScreenWidth = BaseTools.getWindowsWidth(this);
-        mItemWidth = mScreenWidth / 7;// 一个Item宽度为屏幕的1/7
+        mItemWidth = mScreenWidth / 8;// 一个Item宽度为屏幕的1/7
         initView();
     }
     
