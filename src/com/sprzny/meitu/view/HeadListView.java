@@ -85,6 +85,15 @@ public class HeadListView extends MultiColumnListView implements OnScrollListene
 		initWithContext(context);
 	}
 
+    /**
+     * 设置用户监听事件
+     * 
+     * @param mScrollListener
+     */
+	public void setMScrollListener(OnScrollListener mScrollListener) {
+	    this.mScrollListener = mScrollListener;
+	}
+	
 	private void initWithContext(Context context) {
 		mScroller = new Scroller(context, new DecelerateInterpolator());
 		// XListView need the scroll event, and it will dispatch the event to
@@ -251,7 +260,22 @@ public class HeadListView extends MultiColumnListView implements OnScrollListene
 			invalidate();
 		}
 	}
-
+	
+	/**
+	 * 刷新
+	 */
+	private void startRefresh() {
+	    mPullRefreshing = true;
+        mHeaderView.setState(XListViewHeader.STATE_REFRESHING);
+        if (mListViewListener != null) {
+            mListViewListener.onRefresh();
+        }
+	}
+	
+	
+	/**
+	 * 加载更多
+	 */
 	private void startLoadMore() {
 		mPullLoading = true;
 		mFooterView.setState(XListViewFooter.STATE_LOADING);
@@ -287,11 +311,7 @@ public class HeadListView extends MultiColumnListView implements OnScrollListene
 			if (getFirstVisiblePosition() == 0) {
 				// invoke refresh
 				if (mEnablePullRefresh && mHeaderView.getVisiableHeight() > mHeaderViewHeight) {
-					mPullRefreshing = true;
-					mHeaderView.setState(XListViewHeader.STATE_REFRESHING);
-					if (mListViewListener != null) {
-						mListViewListener.onRefresh();
-					}
+				    startRefresh();
 				}
 				resetHeaderHeight();
 			} else if (getLastVisiblePosition() == mTotalItemCount - 1) {

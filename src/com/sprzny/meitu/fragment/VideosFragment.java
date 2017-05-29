@@ -1,20 +1,22 @@
 package com.sprzny.meitu.fragment;
 
 import java.util.List;
-
-import com.dodola.model.DuitangInfo;
 import com.dodola.model.VideoInfo;
 import com.dodowaterfall.Helper;
+import com.huewu.pla.lib.internal.PLA_AbsListView;
 import com.huewu.pla.sample.R;
-import com.sprzny.meitu.adapter.NewStaggeredAdapter;
 import com.sprzny.meitu.adapter.VideoStaggeredAdapter;
 import com.sprzny.meitu.service.BaiduVideoService;
-import com.sprzny.meitu.service.SprznyService;
 import com.sprzny.meitu.view.HeadListView;
 import com.sprzny.meitu.view.HeadListView.IXListViewListener;
+import com.sprzny.meitu.view.HeadListView.OnXScrollListener;
+
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.AsyncTask.Status;
@@ -23,7 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class VideosFragment extends Fragment  implements IXListViewListener {
+public class VideosFragment extends Fragment  implements IXListViewListener, OnXScrollListener {
 	private final static String TAG = "NewsFragment";
 	private Activity activity;
 	
@@ -58,6 +60,10 @@ public class VideosFragment extends Fragment  implements IXListViewListener {
             mAdapter = new VideoStaggeredAdapter(activity, mListView);
         }
         mListView.setAdapter(mAdapter);
+        
+        // 监听滑动
+        mListView.setMScrollListener(this);
+        
         // 加载1页
         AddItemToContainer(currentPage, 2);
         
@@ -170,8 +176,7 @@ public class VideosFragment extends Fragment  implements IXListViewListener {
             task.execute(String.valueOf(pageindex));
         }
     }
-	
-	
+    	
 	/* 摧毁视图 */
 	@Override
 	public void onDestroyView() {
@@ -192,5 +197,76 @@ public class VideosFragment extends Fragment  implements IXListViewListener {
     @Override
     public void onLoadMore() {
         AddItemToContainer(++currentPage, 2);
+    }
+
+    @Override
+    public void onScrollStateChanged(PLA_AbsListView view, int scrollState) {
+        switch (scrollState) {
+        case PLA_AbsListView.OnScrollListener.SCROLL_STATE_FLING: // 手指离开屏幕后，惯性滑动
+            break;
+
+        case PLA_AbsListView.OnScrollListener.SCROLL_STATE_IDLE: //  滑动后静止
+            //滑动停止自动播放视频
+            autoPlayVideo(view);
+            break;
+
+        case PLA_AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL: // 手指在屏幕上滑动
+            break;
+        }
+    }
+
+    // firstVisibleItem 当前能看见的第一个列表项ID（从0开始）
+    // visibleItemCount：当前能看见的列表项个数（小半个也算）  
+    // totalItemCount：列表项共数  
+    @Override
+    public void onScroll(PLA_AbsListView view, int firstVisibleItem,
+            int visibleItemCount, int totalItemCount) {
+        if (firstVisible == firstVisibleItem) {
+            return;
+        }
+
+        firstVisible = firstVisibleItem;
+        visibleCount = visibleItemCount;
+    }
+
+    @Override
+    public void onXScrolling(View view) {
+        // TODO 
+    }
+    
+    private JCVideoPlayerStandard currPlayer;
+    private int firstVisible;//当前第一个可见的item
+    private int visibleCount;//当前可见的item个数
+
+    /**
+     * 滑动停止自动播放视频
+     */
+    private void autoPlayVideo(PLA_AbsListView view) {
+        for (int i = 0; i < visibleCount; i++) {
+            if (view != null
+                    && view.getChildAt(i) != null
+                    && view.getChildAt(i).findViewById(R.id.player_list_video) != null) {
+                currPlayer = (JCVideoPlayerStandard) view.getChildAt(i)
+                        .findViewById(R.id.player_list_video);
+                
+                if (currPlayer.currentState == JCVideoPlayer.CURRENT_STATE_PLAYING) {
+                    return;
+                }
+                // TODO 停止自动播放
+//                Rect rect = new Rect();
+//                // 获取当前view 的 位置
+//                currPlayer.getLocalVisibleRect(rect);
+//                int videoheight = currPlayer.getHeight();
+//                if (rect.top == 0 && rect.bottom == videoheight) {
+//                    if (currPlayer.currentState == JCVideoPlayer.CURRENT_STATE_NORMAL
+//                            || currPlayer.currentState == JCVideoPlayer.CURRENT_STATE_ERROR) {
+//                        currPlayer.startButton.performClick();
+//                    }
+//                    return;
+//                }
+            }
+        }
+        // 释放其他视频资源
+        JCVideoPlayer.releaseAllVideos();
     }
 }

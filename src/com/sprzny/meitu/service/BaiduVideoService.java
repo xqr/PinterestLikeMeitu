@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -19,19 +20,33 @@ public class BaiduVideoService {
     public static List<CategoryInfo> createCategorys() {
         List<CategoryInfo> list = new LinkedList<CategoryInfo>();
         
-        list.add(new CategoryInfo(1033, "推荐", R.drawable.meinv1));
-        list.add(new CategoryInfo(1060, "影视", R.drawable.meinv1));
-        list.add(new CategoryInfo(1059, "搞笑", R.drawable.meinv1));
-        list.add(new CategoryInfo(1058, "音乐", R.drawable.meinv1));
-        list.add(new CategoryInfo(1062, "小品", R.drawable.meinv1));
-        list.add(new CategoryInfo(1061, "娱乐", R.drawable.meinv1));
-        list.add(new CategoryInfo(1063, "社会", R.drawable.meinv1));
-        list.add(new CategoryInfo(1066, "生活", R.drawable.meinv1));
-        list.add(new CategoryInfo(1064, "猎奇", R.drawable.meinv1));
-        list.add(new CategoryInfo(1067, "游戏", R.drawable.meinv1));
-        list.add(new CategoryInfo(1065, "呆萌", R.drawable.meinv1));
+        list.add(new CategoryInfo(1033, "推荐", R.drawable.bofang));
+        list.add(new CategoryInfo(1060, "影视", R.drawable.bofang));
+        list.add(new CategoryInfo(1059, "搞笑", R.drawable.bofang));
+        list.add(new CategoryInfo(1058, "音乐", R.drawable.bofang));
+        list.add(new CategoryInfo(1062, "小品", R.drawable.bofang));
+        list.add(new CategoryInfo(1061, "娱乐", R.drawable.bofang));
+        list.add(new CategoryInfo(1063, "社会", R.drawable.bofang));
+        list.add(new CategoryInfo(1066, "生活", R.drawable.bofang));
+        list.add(new CategoryInfo(1064, "猎奇", R.drawable.bofang));
+        list.add(new CategoryInfo(1067, "游戏", R.drawable.bofang));
+        list.add(new CategoryInfo(1065, "呆萌", R.drawable.bofang));
         
         return list;
+    }
+    
+    private static String appId = null;
+    /**
+     * 生成appId
+     * 
+     * @return
+     */
+    private static String getAppId() {
+        if (appId  == null) {
+            UUID uuid = UUID.randomUUID();
+            appId = uuid.toString().substring(0, 8);
+        }
+        return appId;
     }
     
     /**
@@ -43,8 +58,7 @@ public class BaiduVideoService {
      * @return
      */
     public static List<VideoInfo> parseVideoList(String channelId, int pageNo, int pageSize) {
-        String url = String.format("http://cpu.baidu.com/%s/abc00564", channelId);
-        
+        String url = String.format("http://cpu.baidu.com/%s/%s", channelId, getAppId());
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);

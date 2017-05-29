@@ -22,6 +22,8 @@ import com.sprzny.meitu.VideoActivity;
 import com.sprzny.meitu.view.HeadListView;
 import com.tencent.smtt.sdk.TbsVideo;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+
 public class VideoStaggeredAdapter extends BaseAdapter {
     private Context mContext;
     private LinkedList<VideoInfo> mInfos;
@@ -46,44 +48,43 @@ public class VideoStaggeredAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater layoutInflator = LayoutInflater.from(parent.getContext());
-            convertView = layoutInflator.inflate(R.layout.infos_list, null);
+            convertView = layoutInflator.inflate(R.layout.item_video, null);
+            
             holder = new ViewHolder();
-            holder.imageView = (ScaleImageView) convertView.findViewById(R.id.news_pic);
-            holder.contentView = (TextView) convertView.findViewById(R.id.news_title);
-            holder.bofangdurationView = (TextView) convertView.findViewById(R.id.bofangduration);
+            holder.player = (JCVideoPlayerStandard) convertView.findViewById(R.id.player_list_video);
+            holder.tvVideoUserName = (TextView) convertView.findViewById(R.id.tv_video_userName);
+            holder.tvVideoPlayCount = (TextView) convertView.findViewById(R.id.tv_video_play_count);
+            holder.bofangduration = (TextView) convertView.findViewById(R.id.bofangduration);
+            
             convertView.setTag(holder);
         }
-
         holder = (ViewHolder) convertView.getTag();
-        // 这里是控制图片在页面上展示的大小
-        holder.imageView.setImageWidth(duitangInfo.getWidth());
-        holder.imageView.setImageHeight(duitangInfo.getHeight());
-        holder.contentView.setText(duitangInfo.getTitle());
-        holder.bofangdurationView.setText(duitangInfo.getFormatDuration());
-        imageLoader.displayImage(duitangInfo.getThumbUrl(), holder.imageView, options);
         
-        holder.imageView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TbsVideo.openVideo(mContext, duitangInfo.getUrl());
-//                
-//                Intent intent = new Intent();
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("duitangInfo", duitangInfo);
-//                intent.putExtras(bundle);
-//                
-//                intent.setClass(mContext, VideoActivity.class);  
-//                mContext.startActivity(intent);
+        holder.tvVideoUserName.setText(duitangInfo.getSource());
+        holder.bofangduration.setText(duitangInfo.getFormatDuration());
+        if (duitangInfo.getPlaybackCount() >= 10000) {
+            int wCount = duitangInfo.getPlaybackCount() / 1000;
+            String value = String.valueOf(wCount / 10);
+            int kCount = wCount % 10;
+            if (kCount != 0) {
+                value = value+"."+kCount;
             }
-        });
+            holder.tvVideoPlayCount.setText(value + "万次播放");
+        } else {
+            holder.tvVideoPlayCount.setText(duitangInfo.getPlaybackCount() + "次播放");
+        }
+        holder.player.setUp(duitangInfo.getUrl(), JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, 
+                duitangInfo.getTitle());
+        imageLoader.displayImage(duitangInfo.getThumbUrl(), holder.player.thumbImageView, options);
         
         return convertView;
     }
 
     class ViewHolder {
-        ScaleImageView imageView;
-        TextView contentView;
-        TextView bofangdurationView;
+        JCVideoPlayerStandard player;
+        TextView tvVideoUserName;
+        TextView tvVideoPlayCount;
+        TextView bofangduration;
     }
 
     @Override

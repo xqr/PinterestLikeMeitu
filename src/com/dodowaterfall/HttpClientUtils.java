@@ -2,8 +2,11 @@ package com.dodowaterfall;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -21,6 +24,9 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 public class HttpClientUtils {
+    
+    private static Map<String, String> baiduCookie = new HashMap<String, String>();
+    
     /**
      * post请求
      * 
@@ -36,8 +42,7 @@ public class HttpClientUtils {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             if (paramsMap != null) {
                 for (String key : paramsMap.keySet()) {
-                    params.add(new BasicNameValuePair(key,
-                            paramsMap.get(key).toString()));
+                    params.add(new BasicNameValuePair(key, paramsMap.get(key).toString()));
                 }
             }
             httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 60000); 
@@ -51,10 +56,33 @@ public class HttpClientUtils {
                 }
             }
             
+            // 添加cookie
+            String cookieStr = null;
+            for (String key : baiduCookie.keySet()) {
+                if (cookieStr == null) {
+                    cookieStr = key +"="+baiduCookie.get(key);
+                } else {
+                    cookieStr = cookieStr + "; " +key +"=" + baiduCookie.get(key);
+                }
+            }
+            if (cookieStr != null) {
+                httpost.setHeader("Cookie", cookieStr);
+            }
+            
             HttpResponse response = httpclient.execute(httpost);
             HttpEntity entity = response.getEntity();
             String htmlStr = null;
             if (entity != null) {
+                // 解析cookie
+                Header[] cookieHeaders = response.getHeaders("Set-Cookie");
+                if (cookieHeaders != null) {
+                    for (Header item : cookieHeaders) {
+                        String value = item.getValue();
+                        String[] cookieValue = value.split(";")[0].split("=", 2);
+                        baiduCookie.put(cookieValue[0], cookieValue[1]);
+                    }
+                }
+                
                 entity = new BufferedHttpEntity(entity);
                 htmlStr = EntityUtils.toString(entity);
                 entity.consumeContent();

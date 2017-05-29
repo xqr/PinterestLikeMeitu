@@ -7,18 +7,18 @@ import com.dodola.model.CategoryInfo;
 import com.dodowaterfall.BaseTools;
 import com.huewu.pla.sample.R;
 import com.sprzny.meitu.adapter.NewsFragmentPagerAdapter;
-import com.sprzny.meitu.fragment.NewsFragment;
 import com.sprzny.meitu.fragment.VideosFragment;
 import com.sprzny.meitu.service.BaiduVideoService;
-import com.sprzny.meitu.service.SprznyService;
 import com.sprzny.meitu.view.ColumnHorizontalScrollView;
+
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,12 +27,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * 头条号首页
  */
-public class ContentActivity extends FragmentActivity {
+public class ContentActivity extends AppCompatActivity {
     /** 左阴影部分*/
     public ImageView shade_left;
     /** 右阴影部分 */
@@ -107,7 +106,8 @@ public class ContentActivity extends FragmentActivity {
     private void initTabColumn(final List<CategoryInfo> result) {
         mRadioGroup_content.removeAllViews();
         int count =  result.size();
-        mColumnHorizontalScrollView.setParam(this, mScreenWidth, mRadioGroup_content, shade_left, shade_right, ll_more_columns, rl_column);
+        mColumnHorizontalScrollView.setParam(this, mScreenWidth, mRadioGroup_content, 
+                shade_left, shade_right, ll_more_columns, rl_column);
         for(int i = 0; i< count; i++){
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mItemWidth , LayoutParams.WRAP_CONTENT);
             params.leftMargin = 5;
@@ -137,7 +137,6 @@ public class ContentActivity extends FragmentActivity {
                               selectTab(i);
                           }
                       }
-//                      Toast.makeText(getApplicationContext(), result.get(v.getId()).getCategoryTitle(), Toast.LENGTH_SHORT).show();
                 }
             });
             mRadioGroup_content.addView(columnTextView, i ,params);
@@ -179,14 +178,11 @@ public class ContentActivity extends FragmentActivity {
             Bundle data = new Bundle();
             data.putString("text", result.get(i).getCategoryTitle());
             data.putString("id", String.valueOf(result.get(i).getCategoryId()));
-//            data.putInt("id", result.get(i).getCategoryId());
-//            NewsFragment newfragment = new NewsFragment();
             VideosFragment newfragment = new VideosFragment();
             newfragment.setArguments(data);
             fragments.add(newfragment);
         }
         NewsFragmentPagerAdapter mAdapetr = new NewsFragmentPagerAdapter(getSupportFragmentManager(), fragments);
-//      mViewPager.setOffscreenPageLimit(0);
         mViewPager.setAdapter(mAdapetr);
         mViewPager.setOnPageChangeListener(pageListener);
     }
@@ -209,4 +205,18 @@ public class ContentActivity extends FragmentActivity {
             selectTab(position);
         }
     };
+    
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
 }// end of class
