@@ -14,7 +14,7 @@ import me.maxwin.view.XListViewHeader;
 import com.huewu.pla.lib.MultiColumnListView;
 import com.huewu.pla.lib.internal.PLA_AbsListView;
 import com.huewu.pla.lib.internal.PLA_AbsListView.OnScrollListener;
-import com.huewu.pla.sample.R;
+import com.sprzny.hotvideo.R;
 
 import android.content.Context;
 import android.util.AttributeSet;

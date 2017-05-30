@@ -4,7 +4,7 @@ import java.util.List;
 import com.dodola.model.VideoInfo;
 import com.dodowaterfall.Helper;
 import com.huewu.pla.lib.internal.PLA_AbsListView;
-import com.huewu.pla.sample.R;
+import com.sprzny.hotvideo.R;
 import com.sprzny.meitu.adapter.VideoStaggeredAdapter;
 import com.sprzny.meitu.service.BaiduVideoService;
 import com.sprzny.meitu.view.HeadListView;

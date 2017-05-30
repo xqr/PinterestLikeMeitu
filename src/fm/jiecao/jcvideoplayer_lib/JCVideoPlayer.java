@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.huewu.pla.sample.R;
+import com.sprzny.hotvideo.R;
 
 /**
  * Created by Nathen on 16/7/30.

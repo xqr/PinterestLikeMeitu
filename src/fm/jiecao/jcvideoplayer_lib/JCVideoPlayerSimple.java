@@ -1,6 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
-import com.huewu.pla.sample.R;
+import com.sprzny.hotvideo.R;
 
 import android.content.Context;
 import android.util.AttributeSet;

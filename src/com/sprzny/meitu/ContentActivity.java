@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.dodola.model.CategoryInfo;
 import com.dodowaterfall.BaseTools;
-import com.huewu.pla.sample.R;
+import com.sprzny.hotvideo.R;
 import com.sprzny.meitu.adapter.NewsFragmentPagerAdapter;
 import com.sprzny.meitu.fragment.VideosFragment;
 import com.sprzny.meitu.service.BaiduVideoService;

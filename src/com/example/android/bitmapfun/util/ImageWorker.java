@@ -31,7 +31,7 @@ import android.widget.ImageView;
 import java.lang.ref.WeakReference;
 
 import com.dodowaterfall.widget.ScaleImageView;
-import com.huewu.pla.sample.BuildConfig;
+import com.sprzny.hotvideo.BuildConfig;
 
 /**
  * This class wraps up completing some arbitrary long running work when loading

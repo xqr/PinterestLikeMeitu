@@ -15,7 +15,7 @@ import android.text.TextUtils;
 import com.dodola.model.CategoryInfo;
 import com.dodola.model.VideoInfo;
 import com.dodowaterfall.HttpClientUtils;
-import com.huewu.pla.sample.R;
+import com.sprzny.hotvideo.R;
 import com.sprzny.meitu.app.AppApplication;
 
 public class BaiduVideoService {

@@ -26,7 +26,7 @@ import android.util.Log;
 
 import java.io.File;
 
-import com.huewu.pla.sample.BuildConfig;
+import com.sprzny.hotvideo.BuildConfig;
 
 /**
  * This class holds our bitmap caches (memory and disk).
