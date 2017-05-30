@@ -14,6 +14,7 @@ public class BaseActivity extends Activity {
 	GestureDetector mGestureDetector;
 	/** 是否需要监听手势关闭功能 */
 	private boolean mNeedBackGesture = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

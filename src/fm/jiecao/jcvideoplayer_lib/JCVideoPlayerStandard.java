@@ -39,6 +39,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public ImageView thumbImageView;
     public ImageView tinyBackImageView;
 
+    public TextView bofangdurationTextView;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
@@ -60,33 +61,36 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         thumbImageView = (ImageView) findViewById(R.id.thumb);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
-
+        bofangdurationTextView = (TextView) findViewById(R.id.bofangduration);
+        
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
         tinyBackImageView.setOnClickListener(this);
-
     }
 
     @Override
     public void setUp(String url, int screen, Object... objects) {
         super.setUp(url, screen, objects);
-        if (objects.length == 0) {
+        if (objects.length < 2) {
             return;
         }
         String title = objects[0].toString();
         // 视频标题
         titleTextView.setText(title);
+        bofangdurationTextView.setText(objects[1].toString());
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             // 全屏的title
             if (title.length() > 16) {
                 titleTextView.setText(title.substring(0, 16) +"……");
             }
+            bofangdurationTextView.setVisibility(View.INVISIBLE);
             fullscreenButton.setImageResource(R.drawable.jc_shrink);
             backButton.setVisibility(View.VISIBLE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
             changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_fullscreen));
         } else if (currentScreen == SCREEN_LAYOUT_NORMAL
                 || currentScreen == SCREEN_LAYOUT_LIST) {
+            bofangdurationTextView.setVisibility(View.VISIBLE);
             fullscreenButton.setImageResource(R.drawable.jc_enlarge);
             backButton.setVisibility(View.GONE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
@@ -184,6 +188,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void onClick(View v) {
         super.onClick(v);
+        // 点击播放/暂停，都不显示视频时长
+        if (bofangdurationTextView.isShown()) {
+            bofangdurationTextView.setVisibility(GONE);
+        }
         int i = v.getId();
         if (i == R.id.thumb) {
             if (TextUtils.isEmpty(url)) {
@@ -786,6 +794,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void onCompletion() {
         super.onCompletion();
+        bofangdurationTextView.setVisibility(VISIBLE);
         cancelDismissControlViewTimer();
     }
 }

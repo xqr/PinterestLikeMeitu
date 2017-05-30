@@ -8,6 +8,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 import android.app.Application;
 import android.content.Context;
@@ -21,6 +23,7 @@ public class AppApplication extends Application {
 		super.onCreate();
 		Context context = getApplicationContext();
 		initImageLoader(context);
+		PushAgentRegister();
 		mAppApplication = this;
 	}
 	
@@ -61,4 +64,25 @@ public class AppApplication extends Application {
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);//全局初始化此配置
 	}
+	
+	/**
+     * 启推送服务
+     */
+    private void PushAgentRegister() {
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        //注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+
+          @Override
+          public void onSuccess(String deviceToken) {
+              //注册成功会返回device token
+          }
+
+          @Override
+          public void onFailure(String s, String s1) {
+
+          }
+      });
+        mPushAgent.setDebugMode(false);
+    }
 }

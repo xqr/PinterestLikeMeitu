@@ -37,8 +37,7 @@ public class VideoStaggeredAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        ViewHolder holder;
+        final ViewHolder holder;
         final VideoInfo duitangInfo = mInfos.get(position);
 
         if (convertView == null) {
@@ -49,17 +48,17 @@ public class VideoStaggeredAdapter extends BaseAdapter {
             holder.player = (JCVideoPlayerStandard) convertView.findViewById(R.id.player_list_video);
             holder.tvVideoUserName = (TextView) convertView.findViewById(R.id.tv_video_userName);
             holder.tvVideoPlayCount = (TextView) convertView.findViewById(R.id.tv_video_play_count);
-            holder.bofangduration = (TextView) convertView.findViewById(R.id.bofangduration);
             
             convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        holder = (ViewHolder) convertView.getTag();
         if (TextUtils.isEmpty(duitangInfo.getSource())) {
             holder.tvVideoUserName.setText(R.string.app_name);
         } else {
             holder.tvVideoUserName.setText(duitangInfo.getSource());
         }
-        holder.bofangduration.setText(duitangInfo.getFormatDuration());
+        
         if (duitangInfo.getPlaybackCount() >= 10000) {
             int wCount = duitangInfo.getPlaybackCount() / 1000;
             String value = String.valueOf(wCount / 10);
@@ -72,7 +71,8 @@ public class VideoStaggeredAdapter extends BaseAdapter {
             holder.tvVideoPlayCount.setText(duitangInfo.getPlaybackCount() + "次播放");
         }
         holder.player.setUp(duitangInfo.getUrl(), JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, 
-                duitangInfo.getTitle());
+                duitangInfo.getTitle(), duitangInfo.getFormatDuration());
+        
         imageLoader.displayImage(duitangInfo.getThumbUrl(), holder.player.thumbImageView, options);
         
         return convertView;
@@ -82,7 +82,6 @@ public class VideoStaggeredAdapter extends BaseAdapter {
         JCVideoPlayerStandard player;
         TextView tvVideoUserName;
         TextView tvVideoPlayCount;
-        TextView bofangduration;
     }
 
     @Override

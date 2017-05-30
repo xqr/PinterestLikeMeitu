@@ -11,6 +11,7 @@ import com.sprzny.meitu.fragment.VideosFragment;
 import com.sprzny.meitu.service.BaiduVideoService;
 import com.sprzny.meitu.view.ColumnHorizontalScrollView;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
@@ -62,6 +63,7 @@ public class ContentActivity extends AppCompatActivity {
         MobclickAgent.enableEncrypt(true);//6.0.0版本及以后
         // 禁止默认的页面统计方式
         MobclickAgent.openActivityDurationTrack(false);
+        PushAgent.getInstance(this).onAppStart();
         
         mScreenWidth = BaseTools.getWindowsWidth(this);
         mItemWidth = mScreenWidth / 8;// 一个Item宽度为屏幕的1/7
