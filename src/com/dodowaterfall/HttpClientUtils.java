@@ -23,9 +23,29 @@ import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import com.sprzny.meitu.app.AppApplication;
+import com.sprzny.meitu.service.HistoryService;
+
 public class HttpClientUtils {
     
-    private static Map<String, String> baiduCookie = new HashMap<String, String>();
+    private static Map<String, String> baiduCookie = null;
+    
+    private static HistoryService history = new HistoryService(AppApplication.getApp());
+    /**
+     * 获取cookie
+     * 
+     * @return
+     */
+    private static Map<String, String> getBaiduCookie() {
+        if (baiduCookie == null) {
+            baiduCookie = history.getCookieHistory();
+        }
+        if (baiduCookie == null) {
+            baiduCookie = new HashMap<String, String>();
+        }
+        return baiduCookie;
+    }
+    
     
     /**
      * post请求
@@ -45,7 +65,7 @@ public class HttpClientUtils {
                     params.add(new BasicNameValuePair(key, paramsMap.get(key).toString()));
                 }
             }
-            httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 60000); 
+            httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000); 
             
             httpost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
             
@@ -58,7 +78,7 @@ public class HttpClientUtils {
             
             // 添加cookie
             String cookieStr = null;
-            for (String key : baiduCookie.keySet()) {
+            for (String key : getBaiduCookie().keySet()) {
                 if (cookieStr == null) {
                     cookieStr = key +"="+baiduCookie.get(key);
                 } else {
@@ -76,10 +96,15 @@ public class HttpClientUtils {
                 // 解析cookie
                 Header[] cookieHeaders = response.getHeaders("Set-Cookie");
                 if (cookieHeaders != null) {
+                    boolean update = false;
                     for (Header item : cookieHeaders) {
+                        update = true;
                         String value = item.getValue();
                         String[] cookieValue = value.split(";")[0].split("=", 2);
                         baiduCookie.put(cookieValue[0], cookieValue[1]);
+                    }
+                    if (update) {
+                        history.saveCookieHistory(baiduCookie);
                     }
                 }
                 

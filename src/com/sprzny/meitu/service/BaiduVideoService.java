@@ -10,10 +10,13 @@ import java.util.UUID;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import android.text.TextUtils;
+
 import com.dodola.model.CategoryInfo;
 import com.dodola.model.VideoInfo;
 import com.dodowaterfall.HttpClientUtils;
 import com.huewu.pla.sample.R;
+import com.sprzny.meitu.app.AppApplication;
 
 public class BaiduVideoService {
     
@@ -43,8 +46,13 @@ public class BaiduVideoService {
      */
     private static String getAppId() {
         if (appId  == null) {
-            UUID uuid = UUID.randomUUID();
-            appId = uuid.toString().substring(0, 8);
+            HistoryService history = new HistoryService(AppApplication.getApp());
+            appId = history.getAppId();
+            if (TextUtils.isEmpty(appId)) {
+                UUID uuid = UUID.randomUUID();
+                appId = uuid.toString().substring(0, 8);
+                history.saveAppId(appId);
+            }
         }
         return appId;
     }

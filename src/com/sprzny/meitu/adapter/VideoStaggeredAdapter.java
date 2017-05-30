@@ -3,6 +3,7 @@ package com.sprzny.meitu.adapter;
 import java.util.LinkedList;
 import java.util.List;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +54,11 @@ public class VideoStaggeredAdapter extends BaseAdapter {
             convertView.setTag(holder);
         }
         holder = (ViewHolder) convertView.getTag();
-        
-        holder.tvVideoUserName.setText(duitangInfo.getSource());
+        if (TextUtils.isEmpty(duitangInfo.getSource())) {
+            holder.tvVideoUserName.setText(R.string.app_name);
+        } else {
+            holder.tvVideoUserName.setText(duitangInfo.getSource());
+        }
         holder.bofangduration.setText(duitangInfo.getFormatDuration());
         if (duitangInfo.getPlaybackCount() >= 10000) {
             int wCount = duitangInfo.getPlaybackCount() / 1000;
