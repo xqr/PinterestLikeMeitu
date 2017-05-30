@@ -10,6 +10,7 @@ import com.sprzny.meitu.service.BaiduVideoService;
 import com.sprzny.meitu.view.HeadListView;
 import com.sprzny.meitu.view.HeadListView.IXListViewListener;
 import com.sprzny.meitu.view.HeadListView.OnXScrollListener;
+import com.umeng.analytics.MobclickAgent;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
@@ -176,6 +177,18 @@ public class VideosFragment extends Fragment  implements IXListViewListener, OnX
             task.execute(String.valueOf(pageindex));
         }
     }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("video_" + text); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("video_" + "text"); 
+    }
     	
 	/* 摧毁视图 */
 	@Override
@@ -252,18 +265,6 @@ public class VideosFragment extends Fragment  implements IXListViewListener, OnX
                 if (currPlayer.currentState == JCVideoPlayer.CURRENT_STATE_PLAYING) {
                     return;
                 }
-                // TODO 停止自动播放
-//                Rect rect = new Rect();
-//                // 获取当前view 的 位置
-//                currPlayer.getLocalVisibleRect(rect);
-//                int videoheight = currPlayer.getHeight();
-//                if (rect.top == 0 && rect.bottom == videoheight) {
-//                    if (currPlayer.currentState == JCVideoPlayer.CURRENT_STATE_NORMAL
-//                            || currPlayer.currentState == JCVideoPlayer.CURRENT_STATE_ERROR) {
-//                        currPlayer.startButton.performClick();
-//                    }
-//                    return;
-//                }
             }
         }
         // 释放其他视频资源

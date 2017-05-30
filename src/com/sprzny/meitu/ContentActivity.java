@@ -10,6 +10,7 @@ import com.sprzny.meitu.adapter.NewsFragmentPagerAdapter;
 import com.sprzny.meitu.fragment.VideosFragment;
 import com.sprzny.meitu.service.BaiduVideoService;
 import com.sprzny.meitu.view.ColumnHorizontalScrollView;
+import com.umeng.analytics.MobclickAgent;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
@@ -56,6 +57,11 @@ public class ContentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
+        
+        /** 设置是否对日志信息进行加密, 默认false(不加密). */
+        MobclickAgent.enableEncrypt(true);//6.0.0版本及以后
+        // 禁止默认的页面统计方式
+        MobclickAgent.openActivityDurationTrack(false);
         
         mScreenWidth = BaseTools.getWindowsWidth(this);
         mItemWidth = mScreenWidth / 8;// 一个Item宽度为屏幕的1/7
@@ -213,10 +219,17 @@ public class ContentActivity extends AppCompatActivity {
         }
         super.onBackPressed();
     }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+     }
 
     @Override
     protected void onPause() {
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
+        MobclickAgent.onPause(this);
     }
 }// end of class

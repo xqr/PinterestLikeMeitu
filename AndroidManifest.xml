@@ -41,6 +41,9 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
         </activity> 
+        
+        <meta-data android:value="592c1f62c62dca64ce0009a9" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="baidu2" android:name="UMENG_CHANNEL"/>
     </application>
 
 </manifest>

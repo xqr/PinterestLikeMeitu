@@ -3,24 +3,18 @@ package com.sprzny.meitu.adapter;
 import java.util.LinkedList;
 import java.util.List;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.dodola.model.VideoInfo;
 import com.dodowaterfall.Options;
-import com.dodowaterfall.widget.ScaleImageView;
 import com.huewu.pla.sample.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.sprzny.meitu.VideoActivity;
 import com.sprzny.meitu.view.HeadListView;
-import com.tencent.smtt.sdk.TbsVideo;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 

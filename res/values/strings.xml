@@ -22,9 +22,9 @@
     <string name="retry_large_image"><u>加载失败，点击重试</u></string>
     
     
-    <string name="tips_not_wifi">You are currently using the mobile network, the player will continue to consume traffic</string>
-    <string name="tips_not_wifi_confirm">Resume</string>
-    <string name="tips_not_wifi_cancel">Stop play</string>
+    <string name="tips_not_wifi">正在使用非WIFI网络，播放将产品流量费用</string>
+    <string name="tips_not_wifi_confirm">继续播放</string>
+    <string name="tips_not_wifi_cancel">停止播放</string>
     <string name="no_url">No mUrl</string>
 
 </resources>
