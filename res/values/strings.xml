@@ -22,7 +22,7 @@
     <string name="retry_large_image"><u>加载失败，点击重试</u></string>
     
     
-    <string name="tips_not_wifi">正在使用非WIFI网络，播放将产品流量费用</string>
+    <string name="tips_not_wifi">建议在wifi下观看，土豪请随意</string>
     <string name="tips_not_wifi_confirm">继续播放</string>
     <string name="tips_not_wifi_cancel">停止播放</string>
     <string name="no_url">No mUrl</string>

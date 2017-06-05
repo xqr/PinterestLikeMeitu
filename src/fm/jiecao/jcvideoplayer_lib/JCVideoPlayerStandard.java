@@ -80,8 +80,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         bofangdurationTextView.setText(objects[1].toString());
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             // 全屏的title
-            if (title.length() > 16) {
-                titleTextView.setText(title.substring(0, 16) +"……");
+            if (title.length() > 30) {
+                titleTextView.setText(title.substring(0, 30) +"……");
             }
             bofangdurationTextView.setVisibility(View.INVISIBLE);
             fullscreenButton.setImageResource(R.drawable.jc_shrink);

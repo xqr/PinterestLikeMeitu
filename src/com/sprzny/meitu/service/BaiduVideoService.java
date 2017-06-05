@@ -24,10 +24,10 @@ public class BaiduVideoService {
         List<CategoryInfo> list = new LinkedList<CategoryInfo>();
         
         list.add(new CategoryInfo(1033, "推荐", R.drawable.bofang));
-        list.add(new CategoryInfo(1060, "影视", R.drawable.bofang));
+//        list.add(new CategoryInfo(1060, "影视", R.drawable.bofang));
         list.add(new CategoryInfo(1059, "搞笑", R.drawable.bofang));
-        list.add(new CategoryInfo(1058, "音乐", R.drawable.bofang));
-        list.add(new CategoryInfo(1062, "小品", R.drawable.bofang));
+//        list.add(new CategoryInfo(1058, "音乐", R.drawable.bofang));
+//        list.add(new CategoryInfo(1062, "小品", R.drawable.bofang));
         list.add(new CategoryInfo(1061, "娱乐", R.drawable.bofang));
         list.add(new CategoryInfo(1063, "社会", R.drawable.bofang));
         list.add(new CategoryInfo(1066, "生活", R.drawable.bofang));
